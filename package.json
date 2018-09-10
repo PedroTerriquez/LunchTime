@@ -1,0 +1,28 @@
+{
+  "name": "lunchtime",
+  "version": "1.0.0",
+  "description": "An app so you always know what you will eat any day! ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroTerriquez/LunchTime.git"
+  },
+  "keywords": [
+    "node",
+    "launch",
+    "react",
+    "express"
+  ],
+  "author": "Pedro Terriquez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PedroTerriquez/LunchTime/issues"
+  },
+  "homepage": "https://github.com/PedroTerriquez/LunchTime#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
