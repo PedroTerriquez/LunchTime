@@ -2,8 +2,25 @@ const express = require('express')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-const foods = ['Pollito chiken, gallina hen','Ensaladita, ponte sano bb','Dick']
+const Compression = require('compression')
+const BodyParser = require('body-parser')
+const Logger = require('morgan')
+const Helmet = require('helmet')
 
-app.get('/food/today', (req, res) => res.send(foods[Math.floor(Math.random()*foods.length)]))
+// Security
+app.use(Helmet())
 
+// Performance
+app.use(Compression())
+
+// Debug
+app.use(Logger('dev'))
+
+// Request params
+app.use(BodyParser.json())
+app.use(BodyParser.urlencoded({ extended: true }))
+
+const apiRouter = require('./routes/index.js')
+
+app.use('/api', apiRouter)
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))

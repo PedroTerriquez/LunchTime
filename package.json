@@ -4,7 +4,8 @@
   "description": "An app so you always know what you will eat any day! ",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,15 @@
   },
   "homepage": "https://github.com/PedroTerriquez/LunchTime#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "mongoose": "^5.2.14",
+    "morgan": "^1.9.0",
+    "params": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
   }
 }
