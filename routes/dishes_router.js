@@ -4,6 +4,7 @@ const Dish = require('../db/dish.js');
 
 const dishesRouter = Express.Router();
 const permittedParams = ['_id', 'name', 'description', 'ingredients'];
+const reviewPermittedParams = ['user', 'rate', 'comment','_id'];
 
 dishesRouter.get('', (req, res) => {
 	Dish.find({}, (err, dishes) => {
@@ -12,9 +13,12 @@ dishesRouter.get('', (req, res) => {
 });
 
 dishesRouter.get('/:id', (req, res) => {
-	Dish.findOne({_id: req.params.id}, (err, dish) => {
+	Dish
+		.findOne({_id: req.params.id})
+		.populate('reviews.user')
+		.exec((err, dish) => {
 		res.json(dish);
-	})
+		})
 });
 
 dishesRouter.post('', (req, res) => {
@@ -30,6 +34,13 @@ dishesRouter.patch('/:id', (req, res) => {
 	})
 })
 
+dishesRouter.post('/:id/reviews', (req, res) => {
+	Dish.findOne({_id: req.params.id} ,(err, dish) => {
+		dish.reviews.push(review_params(req.body));
+		dish.save((err, dish) => res.status(201).json(dish));
+	})
+})
+
 dishesRouter.delete('/:id', (req, res) => {
 	Dish.findOneAndRemove({_id: req.params.id}, (err, dish) => {
 		res.status(204).json(dish)
@@ -37,6 +48,10 @@ dishesRouter.delete('/:id', (req, res) => {
 })
 function dish_params(body){
 	return params(body).only(permittedParams)
+}
+
+function review_params(body){
+	return params(body).only(reviewPermittedParams)
 }
 
 module.exports = dishesRouter;
