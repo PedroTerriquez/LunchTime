@@ -16,6 +16,12 @@ app.use(Compression())
 // Debug
 app.use(Logger('dev'))
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // Request params
 app.use(BodyParser.json())
 app.use(BodyParser.urlencoded({ extended: true }))
