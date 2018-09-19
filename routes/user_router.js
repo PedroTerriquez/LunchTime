@@ -1,15 +1,22 @@
-const Express = require('express')
-const params = require('params')
+const Express = require('express');
+const params = require('params');
 const User = require('../db/user.js');
+const bcrypt = require('bcrypt');
 
 const userRouter = Express.Router();
-const permittedParams = ['_id', 'name', 'email', 'created_at', 'updated_at']
+const permittedParams = ['_id', 'name', 'email', 'password']
 
 userRouter.post('',(req, res) => {
 	var new_user = User(user_params(req.body));
-	new_user.save((err, user) =>{
-		res.json(201,user);
-	})
+	bcrypt.hash(new_user.password, 10, function (err, hash){
+		if (err) {
+    	return err;
+  	}
+  	new_user.password = hash
+		new_user.save((err, user) =>{
+			res.status(201).json(201,user);
+		})
+  })
 });
 
 function user_params(body) {
