@@ -21,7 +21,7 @@ export default class DishesCRUD extends Component {
 	dishesInfo() {
 		const { dishes } = this.state;
 		let listDishes = ''
-		if(dishes.length) {
+		if(Object.keys(dishes).length > 1) {
 			return dishes.map(dish => (
 				<tr key={dish._id}>
 					<td>{dish.name}</td>
