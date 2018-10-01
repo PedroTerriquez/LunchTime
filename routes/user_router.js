@@ -1,6 +1,6 @@
 const Express = require('express');
 const params = require('params');
-const User = require('../db/user.js');
+const User = require('../db/model/user.js');
 const bcrypt = require('bcrypt');
 
 const userRouter = Express.Router();

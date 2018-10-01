@@ -1,6 +1,6 @@
 const Express = require('express');
 const params = require('params');
-const Menu = require('../db/menu.js');
+const Menu = require('../db/model/menu.js');
 
 const menuRouter = Express.Router();
 const permittedParams = ['date', 'dishes'];

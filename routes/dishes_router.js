@@ -1,6 +1,6 @@
 const Express = require('express');
 const params = require('params');
-const Dish = require('../db/dish.js');
+const Dish = require('../db/model/dish.js');
 
 const dishesRouter = Express.Router();
 const permittedParams = ['_id', 'name', 'description', 'ingredients'];

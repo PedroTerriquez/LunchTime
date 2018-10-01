@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const dishesRouter = require('./dishes_router.js')
 const menuRouter = require('./menu_router.js')
 const userRouter = require('./user_router.js')
-const User = require('../db/user.js');
+const User = require('../db/model/user.js');
 
 const apiRouter = Express.Router();
 
