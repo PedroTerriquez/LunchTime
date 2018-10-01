@@ -1,4 +1,4 @@
-const db = require('../config/db.js')
+const db = require('../../config/db.js')
 const menuSchema = new db.Schema({
 	date: { type: Date, unique: true },
 	dishes: [{ type: db.Schema.Types.ObjectId, ref: 'Dish' }],

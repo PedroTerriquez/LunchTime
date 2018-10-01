@@ -1,4 +1,4 @@
-const db = require('../config/db.js')
+const db = require('../../config/db.js')
 
 const reviewSchema = new db.Schema({
 	user: { type: db.Schema.Types.ObjectId, ref: 'User' },
