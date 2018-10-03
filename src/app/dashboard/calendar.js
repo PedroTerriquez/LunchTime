@@ -9,7 +9,7 @@ export default class Calendar extends Component {
 	}
 
 	componentDidMount() {
-    const url = 'https://islunchtime.herokuapp.com/api/menus';
+    const url = 'https://islunchtime.herokuapp.com/api/menus/month';
     const method = 'GET';
     Axios({ url, method }).then(res => {
     	this.setState({ menus: res.data });
@@ -21,7 +21,7 @@ export default class Calendar extends Component {
 	render() {
 		const { menus } = this.state;
 		let listMenus = ''
-		if(Object.keys(menus).length > 1)
+		if (menus.length)
 		{
 			listMenus = menus.map((menu) =>
 				<tr key={menu._id}>
