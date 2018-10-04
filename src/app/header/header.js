@@ -46,7 +46,7 @@ export default class Header extends Component {
   				</Link>
   			</div>
 				<Navigation />
-				<Profile name="John" img="src/app/user.png" />
+				<Profile name="Karla Villana" img="src/app/user.png" />
 			</section>
 		);
 	}

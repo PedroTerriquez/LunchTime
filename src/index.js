@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Header from "./app/header/header.js";
 import Login from "./app/login/login.js";
-import Calendar from './app/dashboard/calendar.js';
+import Dashboard from './app/dashboard/calendar.js';
 import Menu from './app/menu/add_menu.js';
 import Error from './app/error/error.js';
 import DishesCRUD from './app/dishesCRUD/dishesCRUD.js';
 import Dish from './app/dishesCRUD/new_dish.js';
 import Review from './app/review/review.js';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
@@ -28,7 +29,7 @@ class Application extends Component {
       		<Header />
       		<Switch>
         		<Route exact path="/login" component={ Login }/>
-        		<Route exact path="/" component={ Calendar }/>
+        		<Route exact path="/" component={ Dashboard }/>
         		<Route exact path='/menus/new' component={ Menu }/>
         		<Route exact path='/dishes/all' component={ DishesCRUD }/>
         		<Route exact path='/dishes/new' component={ Dish }/>

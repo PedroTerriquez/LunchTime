@@ -5,7 +5,6 @@ import Textarea from '../input/textarea.js';
 export default class Review extends Component {
 	constructor({ match }) {
 		super();
-		console.log(match);
 		this.state = {
 			rate: '',
 			comment: '',

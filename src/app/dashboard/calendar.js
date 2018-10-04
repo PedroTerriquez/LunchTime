@@ -1,29 +1,35 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom'
-import Axios from  'axios'
+import Axios from 'axios'
+import Loading from '../loading/loading.js'
 
-export default class Calendar extends Component {
+export default class Dashboard extends Component {
 	constructor() {
 		super();
-		this.state = { menus: [] };
+		this.state = {
+			menus: [],
+			loading: true
+		};
 	}
 
 	componentDidMount() {
     const url = 'https://islunchtime.herokuapp.com/api/menus/month';
     const method = 'GET';
     Axios({ url, method }).then(res => {
-    	this.setState({ menus: res.data });
+    	this.setState({
+    		menus: res.data,
+    		loading: false
+    	});
     }).catch(err => {
       console.error(err);
     })
 	}
 
-	render() {
+	renderListMenus(){
 		const { menus } = this.state;
-		let listMenus = ''
 		if (menus.length)
 		{
-			listMenus = menus.map((menu) =>
+		return menus.map((menu) =>
 				<tr key={menu._id}>
 					<th>
 						Month {new Date(menu.date).getMonth()+1} - 
@@ -33,25 +39,36 @@ export default class Calendar extends Component {
 				</tr>
 			);
 		}
+	}
+
+	render() {
+		const { loading } = this.state;
+		let listMenus = this.renderListMenus()
 		return (
   		<div>
-  			<div>Monthly Menu:</div>
-  			<Link to='/menus/new'>
-  				<button type="submit" className="btn btn-primary">Add menu </button>
-  			</Link>
-				<table>
-					<thead>
-						<tr>
-							<th>Date</th>
-							<th>Name</th>
-						</tr>
-					</thead>
-					<tbody>
-						{ listMenus }
-					</tbody>
-				</table>
+				{ loading ? <Loading /> : <Calendar listMenus={ listMenus } /> }
   		</div>
 		);
 	}
 }
 
+function Calendar(props) {
+	return(
+		<div>
+  		<Link to='/menus/new'>
+  			<button type="submit" className="btn btn-primary">Add menu </button>
+  		</Link>
+			<table class="table table-bordered">
+				<thead class='thead-dark'>
+					<tr>
+						<th scope="col">Date</th>
+						<th scope="col">Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					{ props.listMenus }
+				</tbody>
+			</table>
+		</div>
+	)
+}

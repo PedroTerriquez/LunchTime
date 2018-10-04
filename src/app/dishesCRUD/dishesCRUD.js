@@ -1,18 +1,26 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Axios from 'axios'
+import Loading from '../loading/loading.js'
+import { Button } from 'reactstrap'
 
 export default class DishesCRUD extends Component {
 	constructor() {
 		super();
-		this.state = { dishes: [] };
+		this.state = {
+			dishes: [],
+			loading: true
+		};
 	}
 
 	componentDidMount() {
     const url = 'https://islunchtime.herokuapp.com/api/dishes';
     const method = 'GET';
     Axios({ url, method }).then(res => {
-    	this.setState({ dishes: res.data });
+    	this.setState({
+    		dishes: res.data,
+    		loading: false
+    	});
     }).catch(err => {
       console.error(err);
     })
@@ -27,12 +35,11 @@ export default class DishesCRUD extends Component {
 					<td>{dish.name}</td>
 					<td>{dish.description}</td>
 					<td>{dish.ingredients.join()}</td>
-					<td><button>borra</button></td>
-					<td><button>edita</button></td>
-					{console.log(`/dishes/${dish._id}/review`)}
 					<td>
+						<Button color='danger'>Borrar</Button>
+						<Button color='success'>Editar</Button>
 						<Link to={ `/dishes/${dish._id}/review` }>
-							Review
+							<Button color='warning'>Review</Button>
 						</Link>
 					</td>
 				</tr>
@@ -40,22 +47,29 @@ export default class DishesCRUD extends Component {
 		}
 	}
 
+	renderTable(){
+		return(
+			<table class='table table-bordered'>
+				<thead class='thead-light'>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Ingredients</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{ this.dishesInfo() }
+				</tbody>
+			</table>
+		)
+	}
+
 	render() {
+		const { loading } = this.state
 		return (
   		<div>
-				<table>
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Description</th>
-							<th>Ingredients</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{ this.dishesInfo() }
-					</tbody>
-				</table>
+  			{ loading ? <Loading /> : this.renderTable()}
   		</div>
 		);
 	}
