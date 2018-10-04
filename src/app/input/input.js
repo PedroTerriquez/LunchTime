@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-const Input = ({ type, value, id, handleChange }) => (
+const Input = ({ type, value, id, handleChange, labelfor }) => (
 	<div>
-  		<div> { id }: </div>
+  		<div> { labelfor }: </div>
 		<input
 			type={ type }
 			value={ value }

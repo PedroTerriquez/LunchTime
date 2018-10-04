@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Axios from 'axios';
 import Input from '../input/input.js';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default class Menu extends Component {
+export default class AddMenuModal extends Component {
 	constructor() {
 		super();
 		this.state = {
@@ -10,12 +11,14 @@ export default class Menu extends Component {
 			date: '',
 			search: '',
 			results: [],
-			selectedDishes: []
+			selectedDishes: [],
+			modal: false
 		};
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSearchInputChange = this.handleSearchInputChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleClick = this.handleClick.bind(this)
+		this.toggle = this.toggle.bind(this);
 	}
 
 	componentDidMount() {
@@ -64,9 +67,17 @@ export default class Menu extends Component {
 		const url = 'https://islunchtime.herokuapp.com/api/menus';
 		const method = 'POST'
 		Axios({ url, method, data: { dishes: selectedDishes, date: date } })
-			.then(res => { console.log(res) })
+			.then(res => {
+				this.setState({ modal: !this.state.modal })
+				console.log(res) })
 			.catch(err => { console.error(err) })
 	}
+
+	toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
 
 	renderCreatedMenu(selectedDishes, dishes) {
 		return selectedDishes.map(dish_id => (
@@ -88,17 +99,29 @@ export default class Menu extends Component {
 	render() {
 		const { results, date, selectedDishes, search, dishes } = this.state;
 		return (
-			<form id='save-menu' onSubmit={this.handleSubmit}>
-				<Input type='date' value={date} id='date' handleChange={this.handleChange} />
-				<ul>{this.renderCreatedMenu(selectedDishes, dishes)}</ul>
-				<input
-					value={search}
-					placeholder="Search for..."
-					onChange={this.handleSearchInputChange}
-				/>
-				<ul>{this.renderDishesResults(results)} </ul>
-				<button type='submit'>Save menu</button>
-			</form>
+			<div>
+				<Button color="primary" onClick={this.toggle}>Add menú</Button>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className="add-menu-modal">
+					<form id='save-menu' onSubmit={this.handleSubmit}>
+          	<ModalHeader toggle={this.toggle}>Adding new menu</ModalHeader>
+          	<ModalBody>
+							<Input labelfor="Select a date" type='date' value={date} id='date' handleChange={this.handleChange} />
+							<ul>{this.renderCreatedMenu(selectedDishes, dishes)}</ul>
+							<input
+								labelfor="Select a dish"
+								value={search}
+								placeholder="Search for..."
+								onChange={this.handleSearchInputChange}
+							/>
+							<ul>{this.renderDishesResults(results)} </ul>
+          	</ModalBody>
+          	<ModalFooter>
+            	<Button type="submit" color="primary">Save</Button>{' '}
+            	<Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          	</ModalFooter>
+					</form>
+        </Modal>
+			</div>
 		);
 	}
 }

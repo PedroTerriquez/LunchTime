@@ -4,23 +4,14 @@ import styles from '../../styles/header.sass';
 
 const Navigation = () => (
   <nav className={ styles.menu }>
-		<Link to='/menus/new'>
-  		<button className="btn btn-primary">Add menu</button>
-		</Link>
 		<Link to='/login'>
   		<button className="btn btn-primary">Login</button>
 		</Link>
 		<Link to='/'>
   		<button className="btn btn-primary">Calendar</button>
 		</Link>
-		<Link to='/dishes/new'>
-  		<button className="btn btn-primary">Add dish</button>
-		</Link>
 		<Link to='/dishes/all'>
   		<button className="btn btn-primary">Dishes</button>
-		</Link>
-		<Link to='/dishes/review'>
-  		<button className="btn btn-primary">Reviews</button>
 		</Link>
 	</nav>
 );

@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import Header from "./app/header/header.js";
 import Login from "./app/login/login.js";
 import Dashboard from './app/dashboard/calendar.js';
-import Menu from './app/menu/add_menu.js';
 import Error from './app/error/error.js';
 import DishesCRUD from './app/dishesCRUD/dishesCRUD.js';
 import Dish from './app/dishesCRUD/new_dish.js';
@@ -30,7 +29,6 @@ class Application extends Component {
       		<Switch>
         		<Route exact path="/login" component={ Login }/>
         		<Route exact path="/" component={ Dashboard }/>
-        		<Route exact path='/menus/new' component={ Menu }/>
         		<Route exact path='/dishes/all' component={ DishesCRUD }/>
         		<Route exact path='/dishes/new' component={ Dish }/>
         		<Route exact path='/dishes/:id/review' component={ Review }/>

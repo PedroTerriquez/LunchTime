@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import Loading from '../loading/loading.js'
+import AddMenuModal from '../menu/add_menu.js'
 
 export default class Dashboard extends Component {
 	constructor() {
@@ -55,9 +56,7 @@ export default class Dashboard extends Component {
 function Calendar(props) {
 	return(
 		<div>
-  		<Link to='/menus/new'>
-  			<button type="submit" className="btn btn-primary">Add menu </button>
-  		</Link>
+			<AddMenuModal />
 			<table class="table table-bordered">
 				<thead class='thead-dark'>
 					<tr>
