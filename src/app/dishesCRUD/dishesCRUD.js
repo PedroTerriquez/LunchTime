@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Axios from 'axios'
 import Loading from '../loading/loading.js'
 import { Button } from 'reactstrap'
+import AddDishModal from './new_dish.js'
 
 export default class DishesCRUD extends Component {
 	constructor() {
@@ -49,6 +50,8 @@ export default class DishesCRUD extends Component {
 
 	renderTable(){
 		return(
+			<div>
+			<AddDishModal />
 			<table class='table table-bordered'>
 				<thead class='thead-light'>
 					<tr>
@@ -62,6 +65,7 @@ export default class DishesCRUD extends Component {
 					{ this.dishesInfo() }
 				</tbody>
 			</table>
+	</div>
 		)
 	}
 

@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import Input from '../input/input.js';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-export default class Dish extends Component {
+export default class AddDishModal extends Component {
 	constructor(){
 		super();
 		this.state = {
 			name: '',
 			description: '',
-			ingredients: []
+			ingredients: [],
+			modal: false
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.toggle = this.toggle.bind(this)
 	}
+
+	toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
 
 	handleChange(event){
 		this.setState({ [event.target.id]: event.target.value })
@@ -31,12 +40,26 @@ export default class Dish extends Component {
 	render(){
 		const { name, description, ingredients } = this.state
 		return(
-		<form id='save-dish' onSubmit={ this. handleSubmit }>
-			<Input type='text' value={ name } id='name' handleChange={ this.handleChange }/>
-			<Input type='text' value={ description } id='description' handleChange={ this.handleChange }/>
-			<Input type='text' value={ ingredients } id='ingredients' handleChange={ this.handleChange }/>
-			<button type='submit'>Save</button>
-		</form>
+			<div>
+				<Button color="primary" onClick={this.toggle}>Add Dish</Button>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className="add-dish-modal">
+					<form id='save-dish' onSubmit={ this. handleSubmit }>
+          	<ModalHeader toggle={this.toggle}>Adding new dish</ModalHeader>
+          	<ModalBody>
+							<Input type='text' value={ name } id='name' labelfor="Nombre"
+								handleChange={ this.handleChange }/>
+							<Input type='text' value={ description } labelfor="Description"
+								id='description' handleChange={ this.handleChange }/>
+							<Input type='text' value={ ingredients } labelfor="Ingredients"
+								id='ingredients' handleChange={ this.handleChange }/>
+          	</ModalBody>
+          	<ModalFooter>
+            	<Button type="submit" color="primary">Save</Button>{' '}
+            	<Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          	</ModalFooter>
+					</form>
+        </Modal>
+			</div>
 		)
 	}
 }

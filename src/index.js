@@ -30,7 +30,6 @@ class Application extends Component {
         		<Route exact path="/login" component={ Login }/>
         		<Route exact path="/" component={ Dashboard }/>
         		<Route exact path='/dishes/all' component={ DishesCRUD }/>
-        		<Route exact path='/dishes/new' component={ Dish }/>
         		<Route exact path='/dishes/:id/review' component={ Review }/>
         		<Route component={ Error } />
       		</Switch>
