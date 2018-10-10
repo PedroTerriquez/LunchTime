@@ -19,9 +19,14 @@ export default class DishesAll extends Component {
 		};
 		this.editDishModal = this.editDishModal.bind(this)
 		this.toggle = this.toggle.bind(this)
+		this.fetchDishes = this.fetchDishes.bind(this)
 	}
 
 	componentDidMount() {
+		this.fetchDishes()
+	}
+
+	fetchDishes() {
     const url = 'https://islunchtime.herokuapp.com/api/dishes';
     const method = 'GET';
     Axios({ url, method }).then(res => {
@@ -49,6 +54,7 @@ export default class DishesAll extends Component {
     	ingredients: "",
       modal: !this.state.modal
     });
+    this.fetchDishes()
   }
 
 	delete(id) {
@@ -57,6 +63,7 @@ export default class DishesAll extends Component {
     Axios({ url, method }).then(res => {
     	console.log("deleted")
     	console.log(res)
+    	this.fetchDishes()
     }).catch(err => {
       console.error(err);
     })

@@ -28,9 +28,6 @@ export default class Header extends Component {
   				</Link>
   			</div>
 				<Navigation />
-				<Link to='/login'>
-					<p>L</p>
-				</Link>
 				<Profile name="Karla" img="src/app/user.png" />
 			</section>
 		);

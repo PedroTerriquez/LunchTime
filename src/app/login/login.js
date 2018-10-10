@@ -41,10 +41,10 @@ export default class Login extends Component {
 
 		return (
   		<form id='log-in' onSubmit={ this.handleSubmit }>
-  			<Input type="email" value={ email } id="email" handleChange={ this.handleChange }/>
-  			<Input type="password" value={ password } id="password" handleChange={ this.handleChange }/>
+  			<Input labelfor="Email" type="email" value={ email } id="email" handleChange={ this.handleChange }/>
+  			<Input labelfor="Password" type="password" value={ password } id="password" handleChange={ this.handleChange }/>
   			<div>
-  				<button type='submit'> bottonsin </button>
+  				<button type='submit'> Login </button>
   			</div>
   		</form>
 		);
