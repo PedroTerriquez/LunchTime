@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import Input from '../input/input.js';
+import Textarea from '../input/textarea.js';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class AddDishModal extends Component {
@@ -14,6 +15,8 @@ export default class AddDishModal extends Component {
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.saveDish 		= this.saveDish.bind(this)
+		this.updateDish 	= this.updateDish.bind(this)
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -37,25 +40,33 @@ export default class AddDishModal extends Component {
 		const { name, description, ingredients} = this.state
 		const { _id } = this.props
 		if(_id){
-			const url = `https://islunchtime.herokuapp.com/api/dishes/${_id}`
-			const method = 'PATCH'
-    	Axios({ url, method, data: { name, description, ingredients}})
-    		.then(res => {
-    			this.props.toggle()
-    			console.log(res)
-    		})
-    		.catch(err => {	console.error(err) })
+			this.updateDish(_id, name, description, ingredients)
     }
 		else {
-			const url = 'https://islunchtime.herokuapp.com/api/dishes'
-    	const method = 'POST'
-    	Axios({ url, method, data: { name, description, ingredients}})
-    		.then(res => {
-    			this.props.toggle()
-    			console.log(res)
-    		})
-    		.catch(err => {	console.error(err) })
+			this.saveDish(name, description, ingredients)
     }
+	}
+
+	saveDish(name, description, ingredients) {
+		const url = 'https://islunchtime.herokuapp.com/api/dishes'
+    const method = 'POST'
+    Axios({ url, method, data: { name, description, ingredients}})
+    	.then(res => {
+    		this.props.toggle()
+    		console.log(res)
+    	})
+    	.catch(err => {	console.error(err) })
+	}
+
+	updateDish(_id, name, description, ingredients) {
+		const url = `https://islunchtime.herokuapp.com/api/dishes/${_id}`
+		const method = 'PATCH'
+    Axios({ url, method, data: { name, description, ingredients}})
+    	.then(res => {
+    		this.props.toggle()
+    		console.log(res)
+    	})
+    	.catch(err => {	console.error(err) })
 	}
 
 	render(){
@@ -68,8 +79,8 @@ export default class AddDishModal extends Component {
           	<ModalBody>
 							<Input type='text' value={ name } id='name' labelfor="Nombre"
 								handleChange={ this.handleChange }/>
-							<Input type='text' value={ description } labelfor="Description"
-								id='description' handleChange={ this.handleChange }/>
+							<Textarea rows='4' cols='20' labelFor='Description'
+								id='description' handleChange={ this.handleChange } value={ description }/>
 							<Input type='text' value={ ingredients } labelfor="Ingredients"
 								id='ingredients' handleChange={ this.handleChange }/>
           	</ModalBody>

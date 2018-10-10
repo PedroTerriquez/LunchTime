@@ -21,16 +21,6 @@ export default class DishesAll extends Component {
 		this.toggle = this.toggle.bind(this)
 	}
 
-	toggle() {
-    this.setState({
-    	id: "",
-    	name: "",
-    	description: "",
-    	ingredients: "",
-      modal: !this.state.modal
-    });
-  }
-
 	componentDidMount() {
     const url = 'https://islunchtime.herokuapp.com/api/dishes';
     const method = 'GET';
@@ -43,6 +33,23 @@ export default class DishesAll extends Component {
       console.error(err);
     })
 	}
+
+	componentWillUnmount() {
+		this.setState({
+			dishes: [],
+			loading: true
+		})
+	}
+
+	toggle() {
+    this.setState({
+    	id: "",
+    	name: "",
+    	description: "",
+    	ingredients: "",
+      modal: !this.state.modal
+    });
+  }
 
 	delete(id) {
     const url = `https://islunchtime.herokuapp.com/api/dishes/${id}`;
@@ -99,14 +106,15 @@ export default class DishesAll extends Component {
 	}
 
 	renderTable() {
+		const { id, name, description, ingredients, modal } = this.state
 		return(
 			<div>
 				<AddDishModal
-					_id={ this.state.id }
-					name={ this.state.name }
-					description={ this.state.description }
-					ingredients= { this.state.ingredients }
-					modal={this.state.modal}
+					_id={ id }
+					name={ name }
+					description={ description }
+					ingredients= { ingredients }
+					modal={ modal }
 					toggle={this.toggle.bind(this)}
 				/>
         <Button color="secondary" onClick={this.toggle} >Add new</Button>

@@ -4,15 +4,6 @@ import styles from '../../styles/header.sass';
 
 const Navigation = () => (
   <nav className={ styles.menu }>
-		<Link to='/login'>
-  		<button className="btn btn-primary">Login</button>
-		</Link>
-		<Link to='/'>
-  		<button className="btn btn-primary">Calendar</button>
-		</Link>
-		<Link to='/dishes/all'>
-  		<button className="btn btn-primary">Dishes</button>
-		</Link>
 	</nav>
 );
 
@@ -37,7 +28,10 @@ export default class Header extends Component {
   				</Link>
   			</div>
 				<Navigation />
-				<Profile name="Karla Villana" img="src/app/user.png" />
+				<Link to='/login'>
+					<p>L</p>
+				</Link>
+				<Profile name="Karla" img="src/app/user.png" />
 			</section>
 		);
 	}

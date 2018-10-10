@@ -40,8 +40,10 @@ export default class AddMenuModal extends Component {
 
 	handleClick(event) {
 		event.persist();
-		this.setState({ results: [] })
-		this.setState({ search: '' })
+		this.setState({ 
+			results: [],
+			search: ''
+		})
 		if (this.state.selectedDishes.indexOf(event.target.id) == -1) {
 			this.setState(prevState => ({
 				selectedDishes: [...prevState.selectedDishes, event.target.id]
@@ -55,11 +57,13 @@ export default class AddMenuModal extends Component {
 	}
 
 	handleSearchInputChange(event) {
-		this.setState({ search: event.target.value })
 		const { dishes } = this.state
 		let word = event.target.value;
 		let res = dishes.filter(dish => this.substringOf(dish.name, word));
-		this.setState({ results: res })
+		this.setState({
+			results: res,
+			search: event.target.value
+		})
 	}
 
 	handleSubmit(event) {
@@ -69,7 +73,7 @@ export default class AddMenuModal extends Component {
 		const method = 'POST'
 		Axios({ url, method, data: { dishes: selectedDishes, date: date } })
 			.then(res => {
-				this.setState({ modal: !this.state.modal })
+				this.toggle()
 				console.log(res) })
 			.catch(err => { console.error(err) })
 	}
@@ -80,7 +84,7 @@ export default class AddMenuModal extends Component {
     });
   }
 
-	renderCreatedMenu(selectedDishes, dishes) {
+	renderSelectedDishes(selectedDishes, dishes) {
 		return selectedDishes.map(dish_id => (
 			<li>{dishes.find(d => d._id == dish_id).name}</li>
 		));
@@ -98,17 +102,17 @@ export default class AddMenuModal extends Component {
 	}
 
 	render() {
-		const { results, date, selectedDishes, search, dishes } = this.state;
+		const { results, date, selectedDishes, search, dishes, modal } = this.state;
 		return (
 			<div>
 				<Button color="primary" onClick={this.toggle}>Add menú</Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className="add-menu-modal">
+        <Modal isOpen={ modal } toggle={this.toggle} className="add-menu-modal">
         	<AddDishModal />
 					<form id='save-menu' onSubmit={this.handleSubmit}>
           	<ModalHeader toggle={this.toggle}>Adding new menu</ModalHeader>
           	<ModalBody>
 							<Input labelfor="Select a date" type='date' value={date} id='date' handleChange={this.handleChange} />
-							<ul>{this.renderCreatedMenu(selectedDishes, dishes)}</ul>
+							<ul>{this.renderSelectedDishes(selectedDishes, dishes)}</ul>
 							<input
 								labelfor="Select a dish"
 								value={search}

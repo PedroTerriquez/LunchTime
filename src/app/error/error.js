@@ -8,7 +8,7 @@ export default class Error404 extends Component {
 	render() {
 		return (
   		<div>
-  			<div> No existe bb u.u </div>
+  			<div> Qué haces aquí? aquí no hay nada bb, regresa a donde estabas porfa </div>
   		</div>
 		);
 	}

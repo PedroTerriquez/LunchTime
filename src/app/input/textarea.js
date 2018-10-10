@@ -1,7 +1,7 @@
 import React,  {Component} from 'react';
-const Textarea =({rows, cols, value, id, handleChange}) => (
+const Textarea =({rows, cols, value, id, handleChange, labelFor}) => (
     <div>
-        <div> { id }: </div>
+        <div> { labelFor }: </div>
         <textarea
             rows={ rows }
             cols={ cols }

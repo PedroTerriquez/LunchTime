@@ -26,15 +26,13 @@ export default class Dashboard extends Component {
     })
 	}
 
-	renderListMenus(){
+	ListMenus(){
 		const { menus } = this.state;
-		if (menus.length)
-		{
+		if (menus.length)	{
 		return menus.map((menu) =>
 				<tr key={menu._id}>
 					<th>
-						Month {new Date(menu.date).getMonth()+1} - 
-						Day {new Date(menu.date).getDate()+1}
+						{new Date(menu.date).getMonth()+1} / {new Date(menu.date).getDate()+1}
 					</th>
 					<th>{menu.dishes[0] ? menu.dishes[0].name : "Dish Deleted"}</th>
 				</tr>
@@ -44,7 +42,7 @@ export default class Dashboard extends Component {
 
 	render() {
 		const { loading } = this.state;
-		let listMenus = this.renderListMenus()
+		let listMenus = this.ListMenus()
 		return (
   		<div>
 				{ loading ? <Loading /> : <Calendar listMenus={ listMenus } /> }
@@ -56,6 +54,9 @@ export default class Dashboard extends Component {
 function Calendar(props) {
 	return(
 		<div>
+			<Link to='/dishes/all'>
+  			<button className="btn btn-primary">Dishes</button>
+			</Link>
 			<AddMenuModal />
 			<table className="table table-bordered">
 				<thead className='thead-dark'>

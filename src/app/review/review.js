@@ -21,8 +21,7 @@ export default class Review extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
-		const { rate, comment } = this.state;
-		const { dish_id } = this.state;
+		const { dish_id, rate, comment } = this.state;
     const url = `https://islunchtime.herokuapp.com/api/dishes/${dish_id}/reviews`;
     const method = 'POST'
     Axios({ url, method, data: { rate, comment }})
