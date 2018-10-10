@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Axios from 'axios';
 import Input from '../input/input.js';
+import AddDishModal from '../dishes/new_dish.js';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 export default class AddMenuModal extends Component {
@@ -102,6 +103,7 @@ export default class AddMenuModal extends Component {
 			<div>
 				<Button color="primary" onClick={this.toggle}>Add menú</Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className="add-menu-modal">
+        	<AddDishModal />
 					<form id='save-menu' onSubmit={this.handleSubmit}>
           	<ModalHeader toggle={this.toggle}>Adding new menu</ModalHeader>
           	<ModalBody>

@@ -36,7 +36,7 @@ export default class Dashboard extends Component {
 						Month {new Date(menu.date).getMonth()+1} - 
 						Day {new Date(menu.date).getDate()+1}
 					</th>
-					<th>{menu.dishes[0].name}</th>
+					<th>{menu.dishes[0] ? menu.dishes[0].name : "Dish Deleted"}</th>
 				</tr>
 			);
 		}
@@ -57,8 +57,8 @@ function Calendar(props) {
 	return(
 		<div>
 			<AddMenuModal />
-			<table class="table table-bordered">
-				<thead class='thead-dark'>
+			<table className="table table-bordered">
+				<thead className='thead-dark'>
 					<tr>
 						<th scope="col">Date</th>
 						<th scope="col">Name</th>
