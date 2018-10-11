@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import Loading from '../loading/loading.js'
 import AddMenuModal from '../menu/add_menu.js'
+import styles from '../../styles/site.sass'
 
 export default class Dashboard extends Component {
 	constructor() {
@@ -14,6 +15,10 @@ export default class Dashboard extends Component {
 	}
 
 	componentDidMount() {
+		this.getMenus()
+	}
+
+	getMenus() {
     const url = 'https://islunchtime.herokuapp.com/api/menus/month';
     const method = 'GET';
     Axios({ url, method }).then(res => {
@@ -26,16 +31,32 @@ export default class Dashboard extends Component {
     })
 	}
 
+	swipeMenus(id,id2,date1,date2){
+		const id2NewDate = date1
+		const id1NewDate = date2
+		this.updateMenu(id2, '2000-01-01T00:00:00.000Z', false)
+		this.updateMenu(id, id1NewDate, false)
+		this.updateMenu(id2, id2NewDate, true)
+	}
+
+	updateMenu(id,date,update){
+		const url = `https://islunchtime.herokuapp.com/api/menus/${id}`;
+		const method = 'PATCH'
+		Axios({ url, method, data: {  date: date } })
+			.then(res => {
+				if(update){ this.getMenus() }
+				console.log(res)
+			})
+			.catch(err => { console.error(err) })
+	}
+
 	ListMenus(){
 		const { menus } = this.state;
 		if (menus.length)	{
 		return menus.map((menu) =>
-				<tr key={menu._id}>
-					<th>
-						{new Date(menu.date).getMonth()+1} / {new Date(menu.date).getDate()+1}
-					</th>
-					<th>{menu.dishes[0] ? menu.dishes[0].name : "Dish Deleted"}</th>
-				</tr>
+			<div className={ styles.gridItem }>
+				<DayBox _id={ menu._id } name={menu.dishes[0] ? menu.dishes[0].name : "Dish Deleted"} date={menu.date} handleSwipe={this.swipeMenus.bind(this)} />
+			</div>
 			);
 		}
 	}
@@ -55,20 +76,57 @@ function Calendar(props) {
 	return(
 		<div>
 			<Link to='/dishes/all'>
-  			<button className="btn btn-primary">Dishes</button>
+  			<button className="btn btn-primary" style={{float: 'right'}}>Dishes</button>
 			</Link>
-			<AddMenuModal />
-			<table className="table table-bordered">
-				<thead className='thead-dark'>
-					<tr>
-						<th scope="col">Date</th>
-						<th scope="col">Name</th>
-					</tr>
-				</thead>
-				<tbody>
+			<h1>Calendar</h1>
+			<div>
+				<AddMenuModal />
+				<div className={ styles.gridContainer }>
 					{ props.listMenus }
-				</tbody>
-			</table>
+				</div>
 		</div>
+	</div>
 	)
+}
+
+class DayBox extends Component {
+	constructor(){
+		super()
+	}
+
+	onDragStart(ev,id, date) {
+		ev.dataTransfer.setData('id_from',id)
+		ev.dataTransfer.setData('date_from',date)
+	}
+
+	onDrop(ev,id,date){
+		let idFrom = ev.dataTransfer.getData("id_from")
+		let dateFrom = ev.dataTransfer.getData("date_from")
+		let idTo = id
+		let dateTo = date
+		this.props.handleSwipe(idFrom,idTo,dateFrom,dateTo)
+	}
+
+	render() {
+		const { _id,name,date } = this.props
+		let month = 'Oct'
+		let day = new Date(date).getDate()+1
+		return(
+				<div
+					className = { styles.boxDay }
+					draggable
+					key={ _id }
+					onDragStart={ (e) => this.onDragStart(e, _id,date) }
+					onDragOver={ (e) => e.preventDefault() }
+					onDrop={ (e) => this.onDrop(e,_id,date) }>
+					<div className={ `${styles.box} ${styles.name}` }><strong>{ name }</strong></div>
+					<div className={ `${styles.box} ${styles.dateDay} `}>
+						<strong className={styles.daySize} >{day}</strong>
+					</div>
+					<div className={ `${styles.box} ${styles.dateMonth}` }><strong>{month}</strong></div>
+					<div className={ `${styles.box} ${styles.rate}` }> Rate 4.4</div>
+					<div className={ `${styles.box} ${styles.actions}` }> Delete </div>
+				</div>
+		)
+	}
 }
