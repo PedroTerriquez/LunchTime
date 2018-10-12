@@ -31,12 +31,14 @@ export default class Dashboard extends Component {
     })
 	}
 
-	swipeMenus(id,id2,date1,date2){
+	 async swipeMenus(id,id2,date1,date2){
 		const id2NewDate = date1
 		const id1NewDate = date2
-		this.updateMenu(id2, '2000-01-01T00:00:00.000Z', false)
-		this.updateMenu(id, id1NewDate, false)
-		this.updateMenu(id2, id2NewDate, true)
+		if(id != id2) {
+			const a = await this.updateMenu(id2, '2000-01-01T00:00:00.000Z', false)
+			const b = await this.updateMenu(id, id1NewDate, false, a)
+			const c = await this.updateMenu(id2, id2NewDate, true, b)
+		}
 	}
 
 	updateMenu(id,date,update){
@@ -45,7 +47,7 @@ export default class Dashboard extends Component {
 		Axios({ url, method, data: {  date: date } })
 			.then(res => {
 				if(update){ this.getMenus() }
-				console.log(res)
+				console.log(res.config.data)
 			})
 			.catch(err => { console.error(err) })
 	}
@@ -54,7 +56,7 @@ export default class Dashboard extends Component {
 		const { menus } = this.state;
 		if (menus.length)	{
 		return menus.map((menu) =>
-			<div className={ styles.gridItem }>
+			<div key={menu._id}  className={ styles.gridItem }>
 				<DayBox _id={ menu._id } name={menu.dishes[0] ? menu.dishes[0].name : "Dish Deleted"} date={menu.date} handleSwipe={this.swipeMenus.bind(this)} />
 			</div>
 			);
@@ -115,7 +117,6 @@ class DayBox extends Component {
 				<div
 					className = { styles.boxDay }
 					draggable
-					key={ _id }
 					onDragStart={ (e) => this.onDragStart(e, _id,date) }
 					onDragOver={ (e) => e.preventDefault() }
 					onDrop={ (e) => this.onDrop(e,_id,date) }>
