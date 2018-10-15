@@ -4,6 +4,7 @@ import Axios from 'axios'
 import Loading from '../loading/loading.js'
 import AddMenuModal from '../menu/add_menu.js'
 import styles from '../../styles/site.sass'
+import Card from '../dashboard/card.js'
 
 export default class Dashboard extends Component {
 	constructor() {
@@ -36,20 +37,22 @@ export default class Dashboard extends Component {
 		const id1NewDate = date2
 		if(id != id2) {
 			const a = await this.updateMenu(id2, '2000-01-01T00:00:00.000Z', false)
-			const b = await this.updateMenu(id, id1NewDate, false, a)
-			const c = await this.updateMenu(id2, id2NewDate, true, b)
+			console.log('a: ', a);
+			const b = await this.updateMenu(id, id1NewDate)
+			console.log('b: ', b);
+			const c = await this.updateMenu(id2, id2NewDate)
+			console.log('c: ', c);
+			this.getMenus();
 		}
 	}
 
-	updateMenu(id,date,update){
-		const url = `https://islunchtime.herokuapp.com/api/menus/${id}`;
-		const method = 'PATCH'
-		Axios({ url, method, data: {  date: date } })
-			.then(res => {
-				if(update){ this.getMenus() }
-				console.log(res.config.data)
-			})
-			.catch(err => { console.error(err) })
+	async updateMenu(id,date){
+		const request = {
+			url: `https://islunchtime.herokuapp.com/api/menus/${id}`,
+			method: 'PATCH',
+			data: { date }
+		}
+		return await Axios(request).then(res => res).catch(err => err)
 	}
 
 	ListMenus(){
@@ -112,6 +115,7 @@ class DayBox extends Component {
 	render() {
 		const { _id,name,date } = this.props
 		let month = 'Oct'
+		let rate = Math.floor(Math.random() * 11) / 2;
 		let day = new Date(date).getDate()+1
 		return(
 				<div
@@ -120,13 +124,7 @@ class DayBox extends Component {
 					onDragStart={ (e) => this.onDragStart(e, _id,date) }
 					onDragOver={ (e) => e.preventDefault() }
 					onDrop={ (e) => this.onDrop(e,_id,date) }>
-					<div className={ `${styles.box} ${styles.name}` }><strong>{ name }</strong></div>
-					<div className={ `${styles.box} ${styles.dateDay} `}>
-						<strong className={styles.daySize} >{day}</strong>
-					</div>
-					<div className={ `${styles.box} ${styles.dateMonth}` }><strong>{month}</strong></div>
-					<div className={ `${styles.box} ${styles.rate}` }> Rate 4.4</div>
-					<div className={ `${styles.box} ${styles.actions}` }> Delete </div>
+					<Card day={ day } mes={ month } rate={ rate } name={ name } />
 				</div>
 		)
 	}
