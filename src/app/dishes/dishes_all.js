@@ -4,6 +4,9 @@ import Axios from 'axios'
 import Loading from '../loading/loading.js'
 import { Button } from 'reactstrap'
 import AddDishModal from './new_dish.js'
+import Dish from './dish.js'
+import styles from '../../styles/site.sass'
+
 
 export default class DishesAll extends Component {
 	constructor() {
@@ -26,6 +29,13 @@ export default class DishesAll extends Component {
 		this.fetchDishes()
 	}
 
+	componentWillUnmount() {
+		this.setState({
+			dishes: [],
+			loading: true
+		})
+	}
+
 	fetchDishes() {
     const url = 'https://islunchtime.herokuapp.com/api/dishes';
     const method = 'GET';
@@ -37,13 +47,6 @@ export default class DishesAll extends Component {
     }).catch(err => {
       console.error(err);
     })
-	}
-
-	componentWillUnmount() {
-		this.setState({
-			dishes: [],
-			loading: true
-		})
 	}
 
 	toggle() {
@@ -81,40 +84,24 @@ export default class DishesAll extends Component {
 
 	dishesInfo() {
 		const { dishes } = this.state;
-		let listDishes = ''
 		if(Object.keys(dishes).length > 1) {
 			return dishes.map(dish => (
-				<tr key={dish._id}>
-					<td>{dish.name}</td>
-					<td>{dish.description}</td>
-					<td>{dish.ingredients.join()}</td>
-					<td>
-						<Button
-							color='danger'
-							onClick={ () => this.delete(dish._id) }>
-							Borrar
-						</Button>
-						<Button
-							color='success'
-							onClick={ () => this.editDishModal(
-								dish._id,
-								dish.name,
-								dish.description,
-								dish.ingredients) }>
-							Editar
-						</Button>
-						<Link to={ `/dishes/${dish._id}/review` }>
-							<Button color='warning'>Review</Button>
-						</Link>
-					</td>
-				</tr>
+				<Dish
+					key={ dish._id }
+					id={ dish._id }
+					name={ dish.name }
+					description={ dish.description }
+					ingredients={ dish.ingredients }
+					handleDelete={ this.delete.bind(this) }
+					handleEdit={ () => this.editDishModal(dish._id, dish.name, dish.description, dish.ingredients) }
+					/>
 			));
 		}
 	}
 
 	renderTable() {
 		const { id, name, description, ingredients, modal } = this.state
-		return(
+		return (
 			<div>
 				<AddDishModal
 					_id={ id }
@@ -125,21 +112,9 @@ export default class DishesAll extends Component {
 					toggle={this.toggle.bind(this)}
 				/>
         <Button color="secondary" onClick={this.toggle} >Add new</Button>
-				<div className='table-responsive-sm'>
-					<table className='table table-bordered'>
-						<thead className='thead-light'>
-							<tr>
-								<th>Name</th>
-								<th>Description</th>
-								<th>Ingredients</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							{ this.dishesInfo() }
-						</tbody>
-					</table>
-				</div>
+        <div className={ styles.gridContainer}>
+        	{ this.dishesInfo() }
+        </div>
 			</div>
 		)
 	}

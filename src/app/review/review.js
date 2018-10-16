@@ -34,8 +34,8 @@ export default class Review extends Component {
 		return (
   		<div>
   			<h1> My opinion about FOODNAME </h1>
-  			<Input type="number" value={ rate } id='rate' handleChange={this.handleChange}/>
-				<Textarea value={ comment } id='comment' rows='4' cols='20' handleChange={this.handleChange}/>
+  			<Input labelfor="Rate 0-5" type="number" value={ rate } id='rate' handleChange={this.handleChange}/>
+				<Textarea labelFor="Your opinion here" value={ comment } id='comment' rows='4' cols='20' handleChange={this.handleChange}/>
 				<button>Cancel</button>
 				<button>Submit</button>
  			</div>
