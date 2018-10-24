@@ -26,4 +26,9 @@ app.use(BodyParser.urlencoded({ extended: true }))
 const apiRouter = require('./routes/index.js')
 
 app.use('/api', apiRouter)
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))

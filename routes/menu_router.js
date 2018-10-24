@@ -56,11 +56,34 @@ menuRouter.get('/day/:date', (req, res) => {
 });
 
 menuRouter.post('', (req, res) => {
-	var menu = new Menu(menu_params(req.body));
+	var menu = new Menu(menu_params(req.body))
 	menu.save((err, menu) => {
 		res.status(201).json(menu);
 	})
 });
+
+menuRouter.patch('/switch/:id', (req, res) => {
+	const id = req.params.id
+	const params = req.body
+	Menu.findOne({ _id: id }).exec((err, menu) => {
+		if (menu) {
+			Menu.findOneAndUpdate({ date: params.date }, { date: null }).exec((err, menuTarget) => {
+				let tempDate = menu.date
+				menu.set({ date: params.date })
+				menu.save((err, updatedMenu) => {
+					if (menuTarget) {
+						menuTarget.date = tempDate
+						menuTarget.save((err, updatedTargetMenu) => {
+							return res.status(201).json(menu);
+						})
+					} else {
+						return res.status(201).json(menu);
+					}
+				})
+			})
+		}
+	})
+})
 
 menuRouter.patch('/:id', (req, res) => {
 	Menu.findOneAndUpdate({_id: req.params.id}, menu_params(req.body) ,(err, menu) => {
