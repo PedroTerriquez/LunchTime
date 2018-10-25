@@ -1,42 +1,42 @@
-import React, { Component } from "react";
-import { Redirect } from 'react-router';
-import Axios from  'axios';
-import Input from '../input/input.js';
+import React, { Component } from "react"
+import { Redirect } from 'react-router'
+import Axios from  'axios'
+import Input from '../input/input.js'
 
 export default class Login extends Component {
 	constructor() {
-		super();
+		super()
 		this.state = {
 			email: '',
 			password: '',
 			userId: null
-		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		}
+		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	handleChange(event) {
 		this.setState({
 			[event.target.id]: event.target.value
-		});
+		})
 	}
 
 	handleSubmit(event) {
-		event.preventDefault();
-		const { email, password } = this.state;
-    const url = 'https://islunchtime.herokuapp.com/api/login';
-    const method = 'POST';
+		event.preventDefault()
+		const { email, password } = this.state
+    const url = 'https://islunchtime.herokuapp.com/api/login'
+    const method = 'POST'
     Axios({ url, method, data: { email, password } }).then(res => {
-    	this.setState({ userId: res.data['_id'] });
+    	this.setState({ userId: res.data['_id'] })
     }).catch(err => {
-      console.error(err);
+      console.error(err)
     })
 	}
 
 	render() {
-		const { email, password, userId } = this.state;
+		const { email, password, userId } = this.state
     if (userId) {
-      return (<Redirect to="/dashboard"/>);
+      return (<Redirect to="/dashboard"/>)
     }
 
 		return (
@@ -47,6 +47,6 @@ export default class Login extends Component {
   				<button type='submit'> Login </button>
   			</div>
   		</form>
-		);
+		)
 	}
 }

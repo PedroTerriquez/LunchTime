@@ -1,27 +1,27 @@
-import React, { Component } from "react";
-import Input from '../input/input.js';
-import Textarea from '../input/textarea.js';
+import React, { Component } from "react"
+import Input from '../input/input.js'
+import Textarea from '../input/textarea.js'
 
 export default class Review extends Component {
 	constructor({ match }) {
-		super();
+		super()
 		this.state = {
 			rate: '',
 			comment: '',
 			dish_id: ''
-		};
-		this.handleChange = this.handleChange.bind(this);
+		}
+		this.handleChange = this.handleChange.bind(this)
 	}
 
 	handleChange(event){
 		this.setState({
 			[event.target.id]: event.target.value
-		});
+		})
 	}
 
 	handleSubmit(event){
-		event.preventDefault();
-		const { dish_id, rate, comment } = this.state;
+		event.preventDefault()
+		const { dish_id, rate, comment } = this.state
     const url = `https://islunchtime.herokuapp.com/api/dishes/${dish_id}/reviews`;
     const method = 'POST'
     Axios({ url, method, data: { rate, comment }})
@@ -30,7 +30,7 @@ export default class Review extends Component {
 	}
 
 	render(){
-		const { rate, comment } = this.state;
+		const { rate, comment } = this.state
 		return (
   		<div>
   			<h1> My opinion about FOODNAME </h1>
@@ -39,6 +39,6 @@ export default class Review extends Component {
 				<button>Cancel</button>
 				<button>Submit</button>
  			</div>
-		);
+		)
 	}
 }

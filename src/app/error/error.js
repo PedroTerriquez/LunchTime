@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 
 export default class Error404 extends Component {
 	constructor() {
-		super();
+		super()
 	}
 
 	render() {
@@ -10,6 +10,6 @@ export default class Error404 extends Component {
   		<div>
   			<div> Qué haces aquí? aquí no hay nada bb, regresa a donde estabas porfa </div>
   		</div>
-		);
+		)
 	}
 }

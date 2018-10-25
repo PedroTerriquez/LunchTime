@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import Axios from 'axios';
-import Input from '../input/input.js';
-import AddDishModal from '../dishes/new_dish.js';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from "react"
+import Axios from 'axios'
+import Input from '../input/input.js'
+import AddDishModal from '../dishes/new_dish.js'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 export default class AddMenuModal extends Component {
 	constructor() {
-		super();
+		super()
 		this.state = {
 			dishes: [],
 			date: '',
@@ -14,33 +14,33 @@ export default class AddMenuModal extends Component {
 			results: [],
 			selectedDishes: [],
 			modal: false
-		};
+		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSearchInputChange = this.handleSearchInputChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 		this.handleClick = this.handleClick.bind(this)
-		this.toggle = this.toggle.bind(this);
+		this.toggle = this.toggle.bind(this)
 	}
 
 	componentDidMount() {
-		const url = 'https://islunchtime.herokuapp.com/api/dishes';
-		const method = 'GET';
+		const url = 'https://islunchtime.herokuapp.com/api/dishes'
+		const method = 'GET'
 		Axios({ url, method }).then(res => {
-			this.setState({ dishes: res.data });
+			this.setState({ dishes: res.data })
 		}).catch(err => {
-			console.error(err);
+			console.error(err)
 		})
 	}
 
 	handleChange(event) {
 		this.setState({
 			[event.target.id]: event.target.value
-		});
+		})
 	}
 
 	handleClick(event) {
-		event.persist();
-		this.setState({ 
+		event.persist()
+		this.setState({
 			results: [],
 			search: ''
 		})
@@ -53,13 +53,13 @@ export default class AddMenuModal extends Component {
 	}
 
 	substringOf(str, substr) {
-		return (str.toUpperCase().indexOf(substr.toUpperCase()) > -1);
+		return (str.toUpperCase().indexOf(substr.toUpperCase()) > -1)
 	}
 
 	handleSearchInputChange(event) {
 		const { dishes } = this.state
-		let word = event.target.value;
-		let res = dishes.filter(dish => this.substringOf(dish.name, word));
+		let word = event.target.value
+		let res = dishes.filter(dish => this.substringOf(dish.name, word))
 		this.setState({
 			results: res,
 			search: event.target.value
@@ -67,9 +67,9 @@ export default class AddMenuModal extends Component {
 	}
 
 	handleSubmit(event) {
-		event.preventDefault();
-		const { selectedDishes, date } = this.state;
-		const url = 'https://islunchtime.herokuapp.com/api/menus';
+		event.preventDefault()
+		const { selectedDishes, date } = this.state
+		const url = 'https://islunchtime.herokuapp.com/api/menus'
 		const method = 'POST'
 		Axios({ url, method, data: { dishes: selectedDishes, date: date } })
 			.then(res => {
@@ -81,13 +81,13 @@ export default class AddMenuModal extends Component {
 	toggle() {
     this.setState({
       modal: !this.state.modal
-    });
+    })
   }
 
 	renderSelectedDishes(selectedDishes, dishes) {
 		return selectedDishes.map(dish_id => (
 			<li>{dishes.find(d => d._id == dish_id).name}</li>
-		));
+		))
 	}
 
 	renderDishesResults(dishes) {
@@ -98,11 +98,11 @@ export default class AddMenuModal extends Component {
 				value={dish.name}
 				key={dish._id}
 			>{dish.name}</button>
-		));
+		))
 	}
 
 	render() {
-		const { results, date, selectedDishes, search, dishes, modal } = this.state;
+		const { results, date, selectedDishes, search, dishes, modal } = this.state
 		return (
 			<div>
 				<Button color="primary" onClick={this.toggle}>Add menú</Button>
@@ -128,6 +128,6 @@ export default class AddMenuModal extends Component {
 					</form>
         </Modal>
 			</div>
-		);
+		)
 	}
 }

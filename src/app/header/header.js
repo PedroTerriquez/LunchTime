@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
-import styles from '../../styles/header.sass';
+import React, { Component } from "react"
+import { Link } from 'react-router-dom'
+import styles from '../../styles/header.sass'
 
 const Navigation = () => (
   <nav className={ styles.menu }>
 	</nav>
-);
+)
 
 const Profile = ({ name, img }) => (
   <div className={ styles.profile }>
   	<p className={ styles.profileName }>{ name }</p>
 		<img src={ img } className={ styles.profileImage }></img>
 	</div>
-);
+)
 
 export default class Header extends Component {
 	constructor() {
-		super();
+		super()
 	}
 
 	render() {
@@ -30,6 +30,6 @@ export default class Header extends Component {
 				<Navigation />
 				<Profile name="Karla" img="src/app/user.png" />
 			</section>
-		);
+		)
 	}
 }

@@ -1,4 +1,4 @@
-import React,  {Component} from 'react';
+import React,  {Component} from 'react'
 const Textarea =({rows, cols, value, id, handleChange, labelFor}) => (
     <div>
         <div> { labelFor }: </div>

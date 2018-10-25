@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 const Dish = ({ id, name, description, ingredients, handleDelete, handleEdit, handleReview }) => (
 	<div>

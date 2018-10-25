@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Header from "./app/header/header.js";
-import Login from "./app/login/login.js";
-import Dashboard from './app/dashboard/calendar.js';
-import Error from './app/error/error.js';
-import DishesAll from './app/dishes/dishes_all.js';
-import Review from './app/review/review.js';
-import 'bootstrap/dist/css/bootstrap.css';
+import React, { Component } from "react"
+import ReactDOM from "react-dom"
+import Header from "./app/header/header.js"
+import Login from "./app/login/login.js"
+import Dashboard from './app/dashboard/calendar.js'
+import Error from './app/error/error.js'
+import DishesAll from './app/dishes/dishes_all.js'
+import Review from './app/review/review.js'
+import 'bootstrap/dist/css/bootstrap.css'
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 class Application extends Component {
   constructor() {
@@ -16,8 +16,8 @@ class Application extends Component {
 
     this.state = {
       title: 'Prestamesta pls'
-    };
-    document.title = this.state.title;
+    }
+    document.title = this.state.title
   }
 
   render() {
@@ -38,8 +38,8 @@ class Application extends Component {
   }
 }
 
-const wrapper = document.getElementById('application');
-wrapper ? ReactDOM.render(<Application />, wrapper) : false;
+const wrapper = document.getElementById('application')
+wrapper ? ReactDOM.render(<Application />, wrapper) : false
 
-export default Application;
+export default Application
 

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import React, { Component } from "react"
+import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import Loading from '../loading/loading.js'
 import { Button } from 'reactstrap'
@@ -10,16 +10,18 @@ import styles from '../../styles/site.sass'
 
 export default class DishesAll extends Component {
 	constructor() {
-		super();
+		super()
 		this.state = {
 			dishes: [],
 			loading: true,
 			modal: false,
+			dish : {
 			id: "",
 			name: "",
 			description: "",
 			ingredients: ""
-		};
+			}
+		}
 		this.editDishModal = this.editDishModal.bind(this)
 		this.toggle = this.toggle.bind(this)
 		this.fetchDishes = this.fetchDishes.bind(this)
@@ -37,53 +39,57 @@ export default class DishesAll extends Component {
 	}
 
 	fetchDishes() {
-    const url = 'https://islunchtime.herokuapp.com/api/dishes';
-    const method = 'GET';
+    const url = 'https://islunchtime.herokuapp.com/api/dishes'
+    const method = 'GET'
     Axios({ url, method }).then(res => {
     	this.setState({
     		dishes: res.data,
     		loading: false
-    	});
+    	})
     }).catch(err => {
-      console.error(err);
+      console.error(err)
     })
 	}
 
 	toggle() {
     this.setState({
+    	dish : {
     	id: "",
     	name: "",
     	description: "",
-    	ingredients: "",
+    	ingredients: ""
+    	},
       modal: !this.state.modal
-    });
+    })
     this.fetchDishes()
   }
 
 	delete(id) {
-    const url = `https://islunchtime.herokuapp.com/api/dishes/${id}`;
-    const method = 'DELETE';
+    const url = `https://islunchtime.herokuapp.com/api/dishes/${id}`
+    const method = 'DELETE'
     Axios({ url, method }).then(res => {
     	console.log("deleted")
     	console.log(res)
     	this.fetchDishes()
     }).catch(err => {
-      console.error(err);
+      console.error(err)
     })
 	}
 
 	editDishModal(id, name, description, ingredients) {
 		this.setState({
-			id: id,
-			name: name,
-			description: description,
-			ingredients: ingredients,
+			dish : {
+				id: id,
+				name: name,
+				description: description,
+				ingredients: ingredients
+			},
 			modal: true
 		})
 	}
 
 	dishesInfo() {
-		const { dishes } = this.state;
+		const { dishes } = this.state
 		if(Object.keys(dishes).length > 1) {
 			return dishes.map(dish => (
 				<Dish
@@ -95,19 +101,19 @@ export default class DishesAll extends Component {
 					handleDelete={ this.delete.bind(this) }
 					handleEdit={ () => this.editDishModal(dish._id, dish.name, dish.description, dish.ingredients) }
 					/>
-			));
+			))
 		}
 	}
 
 	renderTable() {
-		const { id, name, description, ingredients, modal } = this.state
+		const { dish, modal } = this.state
 		return (
 			<div>
 				<AddDishModal
-					_id={ id }
-					name={ name }
-					description={ description }
-					ingredients= { ingredients }
+					_id={ dish.id }
+					name={ dish.name }
+					description={ dish.description }
+					ingredients= { dish.ingredients }
 					modal={ modal }
 					toggle={this.toggle.bind(this)}
 				/>
@@ -125,6 +131,6 @@ export default class DishesAll extends Component {
   		<div>
   			{ loading ? <Loading /> : this.renderTable()}
   		</div>
-		);
+		)
 	}
 }

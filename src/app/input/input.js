@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 const Input = ({ type, value, id, handleChange, labelfor }) => (
 	<div>
   		<div> { labelfor }: </div>
@@ -9,6 +9,6 @@ const Input = ({ type, value, id, handleChange, labelfor }) => (
 			onChange={ handleChange }
 		/>
 	</div>
-);
+)
 
-export default Input;
+export default Input

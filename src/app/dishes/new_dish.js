@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import Axios from 'axios';
-import Input from '../input/input.js';
-import Textarea from '../input/textarea.js';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import React, { Component } from 'react'
+import Axios from 'axios'
+import Input from '../input/input.js'
+import Textarea from '../input/textarea.js'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
 export default class AddDishModal extends Component {
 	constructor({ name, description, ingredients }){
-		super();
+		super()
 		this.state = {
 			name: "",
 			description: "",
@@ -26,9 +26,9 @@ export default class AddDishModal extends Component {
         name: props.name,
         description: props.description,
         ingredients: props.ingredients
-    	};
+    	}
     }
-    return null;
+    return null
 	}
 
 	handleChange(event){
