@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import { Link } from 'react-router-dom'
 import Axios from 'axios'
 import Loading from '../loading/loading.js'
@@ -8,11 +8,11 @@ import Card from '../dashboard/card.js'
 
 export default class Dashboard extends Component {
 	constructor() {
-		super();
+		super()
 		this.state = {
 			menus: [],
 			loading: true
-		};
+		}
 	}
 
 	componentDidMount() {
@@ -20,60 +20,50 @@ export default class Dashboard extends Component {
 	}
 
 	getMenus() {
-    const url = 'https://islunchtime.herokuapp.com/api/menus/month';
-    const method = 'GET';
+    const url = 'https://islunchtime.herokuapp.com/api/menus/month'
+    const method = 'GET'
     Axios({ url, method }).then(res => {
     	this.setState({
     		menus: res.data,
     		loading: false
-    	});
+    	})
     }).catch(err => {
-      console.error(err);
+      console.error(err)
     })
 	}
 
-	 async swipeMenus(id,id2,date1,date2){
-		const id2NewDate = date1
-		const id1NewDate = date2
-		if(id != id2) {
-			const a = await this.updateMenu(id2, '2000-01-01T00:00:00.000Z', false)
-			console.log('a: ', a);
-			const b = await this.updateMenu(id, id1NewDate)
-			console.log('b: ', b);
-			const c = await this.updateMenu(id2, id2NewDate)
-			console.log('c: ', c);
-			this.getMenus();
-		}
-	}
-
-	async updateMenu(id,date){
+	swipeMenus(id,date){
+		console.log(date)
 		const request = {
-			url: `https://islunchtime.herokuapp.com/api/menus/${id}`,
-			method: 'PATCH',
-			data: { date }
-		}
-		return await Axios(request).then(res => res).catch(err => err)
+			url: `https://islunchtime.herokuapp.com/api/menus/switch/${id}`,
+    	method: 'PATCH',
+    	data: { date }
+    }
+    Axios(request).then(res => {
+    	this.getMenus()
+    	console.log(res)
+    }).catch(err => { console.error(err) })
 	}
 
 	ListMenus(){
-		const { menus } = this.state;
+		const { menus } = this.state
 		if (menus.length)	{
 		return menus.map((menu) =>
 			<div key={menu._id}  className={ styles.gridItem }>
 				<DayBox _id={ menu._id } name={menu.dishes[0] ? menu.dishes[0].name : "Dish Deleted"} date={menu.date} handleSwipe={this.swipeMenus.bind(this)} />
 			</div>
-			);
+			)
 		}
 	}
 
 	render() {
-		const { loading } = this.state;
+		const { loading } = this.state
 		let listMenus = this.ListMenus()
 		return (
   		<div>
 				{ loading ? <Loading /> : <Calendar listMenus={ listMenus } /> }
   		</div>
-		);
+		)
 	}
 }
 
@@ -99,31 +89,28 @@ class DayBox extends Component {
 		super()
 	}
 
-	onDragStart(ev,id, date) {
+	onDragStart(ev, id) {
 		ev.dataTransfer.setData('id_from',id)
-		ev.dataTransfer.setData('date_from',date)
 	}
 
-	onDrop(ev,id,date){
+	onDrop(ev, date){
 		let idFrom = ev.dataTransfer.getData("id_from")
-		let dateFrom = ev.dataTransfer.getData("date_from")
-		let idTo = id
 		let dateTo = date
-		this.props.handleSwipe(idFrom,idTo,dateFrom,dateTo)
+		this.props.handleSwipe(idFrom, dateTo)
 	}
 
 	render() {
-		const { _id,name,date } = this.props
+		const { _id, name, date } = this.props
 		let month = 'Oct'
-		let rate = Math.floor(Math.random() * 11) / 2;
+		let rate = Math.floor(Math.random() * 11) / 2
 		let day = new Date(date).getDate()+1
 		return(
 				<div
 					className = { styles.boxDay }
 					draggable
-					onDragStart={ (e) => this.onDragStart(e, _id,date) }
+					onDragStart={ (e) => this.onDragStart(e, _id) }
 					onDragOver={ (e) => e.preventDefault() }
-					onDrop={ (e) => this.onDrop(e,_id,date) }>
+					onDrop={ (e) => this.onDrop(e, date) }>
 					<Card day={ day } mes={ month } rate={ rate } name={ name } />
 				</div>
 		)
