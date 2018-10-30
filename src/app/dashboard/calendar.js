@@ -5,6 +5,7 @@ import Loading from '../loading/loading.js'
 import AddMenuModal from '../menu/add_menu.js'
 import styles from '../../styles/site.sass'
 import Card from '../dashboard/card.js'
+import Menu from '../api/menu.js'
 
 export default class Dashboard extends Component {
 	constructor() {
@@ -20,29 +21,19 @@ export default class Dashboard extends Component {
 	}
 
 	getMenus() {
-    const url = 'https://islunchtime.herokuapp.com/api/menus/month'
-    const method = 'GET'
-    Axios({ url, method }).then(res => {
+    Menu.monthMenus().then(menus => {
     	this.setState({
-    		menus: res.data,
+    		menus: menus,
     		loading: false
     	})
-    }).catch(err => {
-      console.error(err)
-    })
+    }).catch(err => console.error(err))
 	}
 
 	swipeMenus(id,date){
-		console.log(date)
-		const request = {
-			url: `https://islunchtime.herokuapp.com/api/menus/switch/${id}`,
-    	method: 'PATCH',
-    	data: { date }
-    }
-    Axios(request).then(res => {
+		Menu.switch(id, { date }).then(res => {
     	this.getMenus()
     	console.log(res)
-    }).catch(err => { console.error(err) })
+    }).catch(err => console.error(err))
 	}
 
 	ListMenus(){
@@ -93,10 +84,12 @@ class DayBox extends Component {
 		ev.dataTransfer.setData('id_from',id)
 	}
 
-	onDrop(ev, date){
+	onDrop(ev, date, _id){
 		let idFrom = ev.dataTransfer.getData("id_from")
 		let dateTo = date
-		this.props.handleSwipe(idFrom, dateTo)
+		if(idFrom != _id){
+			this.props.handleSwipe(idFrom, dateTo)
+		}
 	}
 
 	render() {
@@ -110,7 +103,7 @@ class DayBox extends Component {
 					draggable
 					onDragStart={ (e) => this.onDragStart(e, _id) }
 					onDragOver={ (e) => e.preventDefault() }
-					onDrop={ (e) => this.onDrop(e, date) }>
+					onDrop={ (e) => this.onDrop(e, date, _id) }>
 					<Card day={ day } mes={ month } rate={ rate } name={ name } />
 				</div>
 		)

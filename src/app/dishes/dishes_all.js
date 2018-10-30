@@ -16,10 +16,10 @@ export default class DishesAll extends Component {
 			loading: true,
 			modal: false,
 			dish : {
-			id: "",
-			name: "",
-			description: "",
-			ingredients: ""
+				id: "",
+				name: "",
+				description: "",
+				ingredients: ""
 			}
 		}
 		this.editDishModal = this.editDishModal.bind(this)
@@ -54,10 +54,10 @@ export default class DishesAll extends Component {
 	toggle() {
     this.setState({
     	dish : {
-    	id: "",
-    	name: "",
-    	description: "",
-    	ingredients: ""
+    		id: "",
+    		name: "",
+    		description: "",
+    		ingredients: ""
     	},
       modal: !this.state.modal
     })
