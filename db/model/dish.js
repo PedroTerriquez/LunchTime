@@ -15,7 +15,8 @@ const dishSchema = new db.Schema({
 	reviews: [reviewSchema],
 	user: { type: db.Schema.Types.ObjectId, ref: 'User' },
 	created_at:  { type: Date, default: Date.now },
-	updated_at:  { type: Date, default: Date.now }
+	updated_at:  { type: Date, default: Date.now },
+  slug: String
 })
 
 const Dish = db.model('Dish', dishSchema)
