@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Redirect } from 'react-router'
-import Axios from  'axios'
 import Input from '../input/input.js'
+import AuthApi from '../api/auth.js'
 
 export default class Login extends Component {
 	constructor() {
@@ -24,9 +24,8 @@ export default class Login extends Component {
 	handleSubmit(event) {
 		event.preventDefault()
 		const { email, password } = this.state
-    const url = 'https://islunchtime.herokuapp.com/api/login'
-    const method = 'POST'
-    Axios({ url, method, data: { email, password } }).then(res => {
+		//API
+    AuthApi.login({ email, password }).then(res => {
     	this.setState({ userId: res.data['_id'] })
     }).catch(err => {
       console.error(err)

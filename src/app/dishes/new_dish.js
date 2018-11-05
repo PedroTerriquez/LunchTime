@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Axios from 'axios'
 import Input from '../input/input.js'
 import Textarea from '../input/textarea.js'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import DishApi from '../api/dish.js'
 
 export default class AddDishModal extends Component {
 	constructor({ name, description, ingredients }){
@@ -48,20 +48,15 @@ export default class AddDishModal extends Component {
 	}
 
 	saveDish(name, description, ingredients) {
-		const url = 'https://islunchtime.herokuapp.com/api/dishes'
-    const method = 'POST'
-    Axios({ url, method, data: { name, description, ingredients}})
-    	.then(res => {
+    DishApi.add({ name, description, ingredients}).then(res => {
     		this.props.toggle()
     		console.log(res)
     	})
     	.catch(err => {	console.error(err) })
 	}
 
-	updateDish(_id, name, description, ingredients) {
-		const url = `https://islunchtime.herokuapp.com/api/dishes/${_id}`
-		const method = 'PATCH'
-    Axios({ url, method, data: { name, description, ingredients}})
+	updateDish(id, name, description, ingredients) {
+    DishApi.update({ id, name, description, ingredients})
     	.then(res => {
     		this.props.toggle()
     		console.log(res)

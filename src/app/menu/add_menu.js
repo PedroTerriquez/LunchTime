@@ -1,8 +1,9 @@
 import React, { Component } from "react"
-import Axios from 'axios'
 import Input from '../input/input.js'
 import AddDishModal from '../dishes/new_dish.js'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import DishApi from '../api/dish.js'
+import Menu from '../api/menu.js'
 
 export default class AddMenuModal extends Component {
 	constructor() {
@@ -23,10 +24,8 @@ export default class AddMenuModal extends Component {
 	}
 
 	componentDidMount() {
-		const url = 'https://islunchtime.herokuapp.com/api/dishes'
-		const method = 'GET'
-		Axios({ url, method }).then(res => {
-			this.setState({ dishes: res.data })
+		DishApi.all().then(dishes => {
+			this.setState({ dishes })
 		}).catch(err => {
 			console.error(err)
 		})
@@ -69,10 +68,7 @@ export default class AddMenuModal extends Component {
 	handleSubmit(event) {
 		event.preventDefault()
 		const { selectedDishes, date } = this.state
-		const url = 'https://islunchtime.herokuapp.com/api/menus'
-		const method = 'POST'
-		Axios({ url, method, data: { dishes: selectedDishes, date: date } })
-			.then(res => {
+		Menu.add({ dishes: selectedDishes, date: date}).then(res => {
 				this.toggle()
 				console.log(res) })
 			.catch(err => { console.error(err) })

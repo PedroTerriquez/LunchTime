@@ -1,6 +1,7 @@
 import React, { Component } from "react"
-import Input from '../input/input.js'
+import { Form, FormGroup, Label, Input, FormFeedback, Col, Button } from 'reactstrap';
 import Textarea from '../input/textarea.js'
+import DishApi from '../api/dish.js'
 
 export default class Review extends Component {
 	constructor({ match }) {
@@ -8,9 +9,18 @@ export default class Review extends Component {
 		this.state = {
 			rate: '',
 			comment: '',
-			dish_id: ''
+			dish_id: match.params.id,
+			dish: {}
 		}
 		this.handleChange = this.handleChange.bind(this)
+	}
+
+	componentDidMount(){
+		DishApi.find(this.state.dish_id)
+			.then(dish => {
+				console.log(dish)
+				this.setState({dish})
+			}).catch()
 	}
 
 	handleChange(event){
@@ -22,23 +32,31 @@ export default class Review extends Component {
 	handleSubmit(event){
 		event.preventDefault()
 		const { dish_id, rate, comment } = this.state
-    const url = `https://islunchtime.herokuapp.com/api/dishes/${dish_id}/reviews`;
-    const method = 'POST'
-    Axios({ url, method, data: { rate, comment }})
+    DishApi.addReview(dish_id, { rate, comment })
     	.then(res => { console.log(res) })
     	.catch(err => { console.error(err) })
 	}
 
 	render(){
-		const { rate, comment } = this.state
+		const { rate, comment, dish } = this.state
 		return (
   		<div>
-  			<h1> My opinion about FOODNAME </h1>
-  			<Input labelfor="Rate 0-5" type="number" value={ rate } id='rate' handleChange={this.handleChange}/>
-				<Textarea labelFor="Your opinion here" value={ comment } id='comment' rows='4' cols='20' handleChange={this.handleChange}/>
-				<button>Cancel</button>
-				<button>Submit</button>
+      <Form>
+  			<h1> { dish.name }</h1>
+  			<h3> Feel free to share with us your opinión about this food. </h3>
+      	<FormGroup>
+        	<Label for="exampleText">Your comments here:</Label>
+          <Input type="textarea" name="text" id="comment" value={ comment } onChange={this.handleChange} />
+        </FormGroup>
+        <FormGroup check row>
+          <Col sm={{ size: 10 }}>
+            <Button>Back</Button>
+            <Button onClick={ this.handleSubmit }>Submit</Button>
+          </Col>
+        </FormGroup>
+      </Form>
  			</div>
+
 		)
 	}
 }

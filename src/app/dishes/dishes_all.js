@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import { Link } from 'react-router-dom'
-import Axios from 'axios'
-import Loading from '../loading/loading.js'
 import { Button } from 'reactstrap'
+import Loading from '../loading/loading.js'
 import AddDishModal from './new_dish.js'
 import Dish from './dish.js'
 import styles from '../../styles/site.sass'
+import DishApi from '../api/dish.js'
 
 
 export default class DishesAll extends Component {
@@ -39,11 +39,9 @@ export default class DishesAll extends Component {
 	}
 
 	fetchDishes() {
-    const url = 'https://islunchtime.herokuapp.com/api/dishes'
-    const method = 'GET'
-    Axios({ url, method }).then(res => {
+    DishApi.all().then(dishes => {
     	this.setState({
-    		dishes: res.data,
+    		dishes: dishes,
     		loading: false
     	})
     }).catch(err => {
@@ -65,9 +63,7 @@ export default class DishesAll extends Component {
   }
 
 	delete(id) {
-    const url = `https://islunchtime.herokuapp.com/api/dishes/${id}`
-    const method = 'DELETE'
-    Axios({ url, method }).then(res => {
+    DishApi.destroy(id).then(res => {
     	console.log("deleted")
     	console.log(res)
     	this.fetchDishes()

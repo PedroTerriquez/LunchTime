@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Link } from 'react-router-dom'
-import Axios from 'axios'
 import Loading from '../loading/loading.js'
 import AddMenuModal from '../menu/add_menu.js'
 import styles from '../../styles/site.sass'
