@@ -1,18 +1,21 @@
 import React, { Component } from "react"
 import { Form, FormGroup, Label, Input, FormFeedback, Col, Button } from 'reactstrap';
 import Textarea from '../input/textarea.js'
+import StarsRange from '../input/stars_range.js'
 import DishApi from '../api/dish.js'
 
 export default class Review extends Component {
 	constructor({ match }) {
 		super()
 		this.state = {
-			rate: '',
+			redirect: false,
 			comment: '',
+			stars: '',
 			dish_id: match.params.id,
 			dish: {}
 		}
 		this.handleChange = this.handleChange.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
 	componentDidMount(){
@@ -29,16 +32,26 @@ export default class Review extends Component {
 		})
 	}
 
+	handleRange(number){
+		this.setState({stars: number})
+	}
+
 	handleSubmit(event){
 		event.preventDefault()
 		const { dish_id, rate, comment } = this.state
     DishApi.addReview(dish_id, { rate, comment })
-    	.then(res => { console.log(res) })
+    	.then(res => {
+    		console.log(res)
+    		this.setState({redirect: true})
+    	})
     	.catch(err => { console.error(err) })
 	}
 
 	render(){
-		const { rate, comment, dish } = this.state
+		const { redirect, stars, comment, dish } = this.state
+		if (redirect) {
+			return <Redirect exact to='/' />
+		}
 		return (
   		<div>
       <Form>
@@ -46,6 +59,7 @@ export default class Review extends Component {
   			<h3> Feel free to share with us your opinión about this food. </h3>
       	<FormGroup>
         	<Label for="exampleText">Your comments here:</Label>
+        	<StarsRange stars={ stars } handleClick={ this.handleRange.bind(this) }/>
           <Input type="textarea" name="text" id="comment" value={ comment } onChange={this.handleChange} />
         </FormGroup>
         <FormGroup check row>

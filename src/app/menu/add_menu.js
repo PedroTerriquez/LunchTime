@@ -9,6 +9,7 @@ export default class AddMenuModal extends Component {
 	constructor() {
 		super()
 		this.state = {
+			redirect: false,
 			dishes: [],
 			date: '',
 			search: '',
@@ -68,9 +69,12 @@ export default class AddMenuModal extends Component {
 	handleSubmit(event) {
 		event.preventDefault()
 		const { selectedDishes, date } = this.state
-		Menu.add({ dishes: selectedDishes, date: date}).then(res => {
+		Menu.add({ dishes: selectedDishes, date: date})
+			.then(res => {
 				this.toggle()
-				console.log(res) })
+				console.log(res)
+				this.setState({redirect: true})
+			})
 			.catch(err => { console.error(err) })
 	}
 
@@ -100,7 +104,12 @@ export default class AddMenuModal extends Component {
 	}
 
 	render() {
-		const { results, date, selectedDishes, search, dishes, modal } = this.state
+		const { redirect, results, date, selectedDishes, search, dishes, modal } = this.state
+		if (redirect) {
+			//TODO Refresh using REACT
+			//return <Redirect to='/' />
+			window.location.reload()
+		}
 		return (
 			<div>
 				<Button color="primary" onClick={this.toggle}>Add menú</Button>
