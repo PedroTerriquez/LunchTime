@@ -1,12 +1,13 @@
 import React from 'react'
-import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap'
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap'
 import { Link } from 'react-router-dom'
+
+let image = "http://www.superama.com.mx/views/micrositio/recetas/images/masbuscadas/enchiladasphiladelphia/Web_fotoreceta.jpg"
 
 const Dish = ({ id, name, description, ingredients, handleDelete, handleEdit, handleReview }) => (
 	<div>
     <Card style={{minHeight:'500px', maxHeight:'500px'}}>
-      <CardImg top src="http://www.superama.com.mx/views/micrositio/recetas/images/masbuscadas/enchiladasphiladelphia/Web_fotoreceta.jpg" alt="Card image cap" />
+      <CardImg top src={image} alt="Card image cap" />
       <CardBody style={{overflow: 'auto'}}>
         <CardTitle>{ name }</CardTitle>
         <CardSubtitle>{ description }</CardSubtitle>

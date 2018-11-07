@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Input from '../input/input.js'
-import AddDishModal from '../dishes/new_dish.js'
+import AddDishModal from '../dishes/dish_modal.js'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import DishApi from '../api/dish.js'
 import Menu from '../api/menu.js'
@@ -81,12 +81,14 @@ export default class AddMenuModal extends Component {
   }
 
 	renderSelectedDishes(selectedDishes, dishes) {
+		//TODO Improve this design no mames
 		return selectedDishes.map(dish_id => (
 			<li>{dishes.find(d => d._id == dish_id).name}</li>
 		))
 	}
 
 	renderDishesResults(dishes) {
+		//TODO Improve this design no mamamr
 		return dishes.map(dish => (
 			<button
 				onClick={this.handleClick}

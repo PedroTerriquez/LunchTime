@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Link } from 'react-router-dom'
 import { Button } from 'reactstrap'
 import Loading from '../loading/loading.js'
-import AddDishModal from './new_dish.js'
+import AddDishModal from './dish_modal.js'
 import Dish from './dish.js'
 import styles from '../../styles/site.sass'
 import DishApi from '../api/dish.js'
@@ -62,7 +62,7 @@ export default class DishesAll extends Component {
     this.fetchDishes()
   }
 
-	delete(id) {
+	deleteDish(id) {
     DishApi.destroy(id).then(res => {
     	console.log("deleted")
     	console.log(res)
@@ -84,7 +84,7 @@ export default class DishesAll extends Component {
 		})
 	}
 
-	dishesInfo() {
+	dishesElements() {
 		const { dishes } = this.state
 		if(Object.keys(dishes).length > 1) {
 			return dishes.map(dish => (
@@ -94,14 +94,14 @@ export default class DishesAll extends Component {
 					name={ dish.name }
 					description={ dish.description }
 					ingredients={ dish.ingredients }
-					handleDelete={ this.delete.bind(this) }
+					handleDelete={ this.deleteDish.bind(this) }
 					handleEdit={ () => this.editDishModal(dish._id, dish.name, dish.description, dish.ingredients) }
 					/>
 			))
 		}
 	}
 
-	renderTable() {
+	dishesList() {
 		const { dish, modal } = this.state
 		return (
 			<div>
@@ -115,7 +115,7 @@ export default class DishesAll extends Component {
 				/>
         <Button color="secondary" onClick={this.toggle} >Add new</Button>
         <div className={ styles.gridContainer}>
-        	{ this.dishesInfo() }
+        	{ this.dishesElements() }
         </div>
 			</div>
 		)
@@ -125,7 +125,7 @@ export default class DishesAll extends Component {
 		const { loading } = this.state
 		return (
   		<div>
-  			{ loading ? <Loading /> : this.renderTable()}
+  			{ loading ? <Loading /> : this.dishesList()}
   		</div>
 		)
 	}
