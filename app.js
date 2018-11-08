@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -22,6 +23,8 @@ app.use(Logger('dev'))
 // Request params
 app.use(BodyParser.json())
 app.use(BodyParser.urlencoded({ extended: true }))
+
+app.use(express.static('dist'))
 
 const apiRouter = require('./routes/index.js')
 

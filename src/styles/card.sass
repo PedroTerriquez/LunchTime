@@ -1,0 +1,42 @@
+.card-item
+  padding: 10px;
+
+.card-day
+  grid-area: card-day;
+  padding-bottom: 0px;
+  padding-top: 20px
+
+.card-day h1
+  font-size: 72px;
+  text-align: center;
+
+.card-menu
+  grid-area: card-menu;
+  padding-top: 20px;
+
+.card-menu h3
+  font-size: 26px;
+  font-weight: bold;
+
+.card-month
+  grid-area: card-month;
+  padding-top: 0px;
+  text-align: center;
+
+.card-month h2
+  font-size: 30px;
+
+.card-rate
+  grid-area: card-rate;
+  padding-top: 4px;
+
+.card-rate h4
+  font-size: 22px;
+
+.calendar-card
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 2fr 1fr;
+  grid-template-areas: "card-day card-menu" "card-month card-rate";
+  background-color: #E0F2F1;
+  border: 2px solid #00796B;
