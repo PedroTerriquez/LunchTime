@@ -1,7 +1,9 @@
 const Express = require('express');
 const params = require('params');
 const Dish = require('../db/model/dish.js');
+const SlugGenerator = require('../lib/slug-generator.js');
 
+const slugGenerator = new SlugGenerator(Dish, 'slug');
 const dishesRouter = Express.Router();
 const permittedParams = ['_id', 'name', 'description', 'ingredients'];
 const reviewPermittedParams = ['user', 'rate', 'comment','_id'];
@@ -21,11 +23,24 @@ dishesRouter.get('/:id', (req, res) => {
 		})
 });
 
+dishesRouter.get('/name/:slug', (req, res) => {
+	Dish
+		.findOne({ slug: req.params.slug })
+		.populate('reviews.user')
+		.exec((err, dish) => {
+		  res.json(dish);
+		});
+});
+
 dishesRouter.post('', (req, res) => {
-	var dish = new Dish(dish_params(req.body));
-	dish.save((err, dishes) => {
-		res.json(201,dish);
-	})
+  const dishParams = dish_params(req.body);
+  slugGenerator.createSlug(dishParams.name).then(slug => {
+    dishParams.slug = slug;
+    var dish = new Dish(dishParams);
+    dish.save((err, dishes) => {
+      return res.json(201, dish);
+    });
+  }).catch(err => res.json(500, err));
 });
 
 dishesRouter.patch('/:id', (req, res) => {
