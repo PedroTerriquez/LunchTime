@@ -1,36 +1,50 @@
 .header
-  width: 100%
-  height: 80px
-  display: grid
-  grid-template-columns: 60% auto 110px
-  grid-template-areas: 'home menu profile'
-  margin-bottom: 20px
-  border-bottom: 1px solid grey;
-  background: #FBA518
+  border-bottom: 4px solid #F0AD44
+  min-height: 60px
+  color: #FAE8CD
+  background-color: #C74029
 
 .menu
-  grid-area: menu
+  text-align: right
+  ul
+    margin: 0px
+  li
+    display: inline
+  a
+    font-weight: bold
+    text-decoration: none
+    border-radius: 5px
+    padding: 7px 10px
+    color: #F0AD44
+    &:hover
+      box-shadow: 1px 1px 2px #233233
+      text-decoration: none
+      background-color: #128085
+      color: #FAE8CD
+    &:active
+      background-color: #385052
 
-.home
-  height: inherit
-  img
-    height: 100%
-  grid-area: home
-.home-logo
-  grid-area: home-logo
-  height: 80px
+.logo
+  padding: 0px 30px
+  h2
+    cursor: pointer
+    width: auto
+    font-family: "Pacifico"
+    &:hover
+      color: #F0AD44
 
-.profile
-  height: inherit
-  img
-    height: 100%
-  grid-area: profile
-  display: grid
-  grid-template-columns: 30px 80px
-  grid-template-areas: 'profile-name profile-image'
+.user
+  border-left: 2px solid #FAE8CD
+  text-align: center
 
-.profile-image
-  border-radius: 50%
-  grid-area: profile-image
-.profile-name
-  grid-area: profile-name
+.sign-out
+  box-shadow: 1px 1px 2px #233233
+  margin: 0px 10px
+  border-radius: 5px
+  background-color: #385052
+  padding: 3px 12px
+  &:hover
+    background-color: #128085
+  a
+    color: #FAE8CD
+    text-decoration: none

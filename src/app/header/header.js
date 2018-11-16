@@ -4,18 +4,6 @@ import styles from '../../styles/header.sass'
 import LogoImage from '../logo.png'
 import UserImage from '../user.png'
 
-const Navigation = () => (
-  <nav className={ styles.menu }>
-	</nav>
-)
-
-const Profile = ({ name, img }) => (
-  <div className={ styles.profile }>
-  	<p className={ styles.profileName }>{ name }</p>
-		<img src={ img } className={ styles.profileImage }></img>
-	</div>
-)
-
 export default class Header extends Component {
 	constructor() {
 		super()
@@ -23,15 +11,31 @@ export default class Header extends Component {
 
 	render() {
 		return (
-  		<section id="header" className={ styles.header }>
-  			<div className={ styles.home } >
-					<Link to='/'>
-  					<img className={ styles.homeLogo } src={ LogoImage }></img>
-  				</Link>
-  			</div>
-				<Navigation />
-				<Profile name="Olimpia" img={ UserImage } />
-			</section>
+  		<header className={ `row align-items-center ${styles.header}` }>
+				<div className={`col-2 ${styles.logo}`}>
+			    <h2>Lunch Time</h2>
+			  </div>
+			  <div className={`col-3 offset-5 ${styles.menu}`}>
+			    <nav>
+			      <ul>
+						  <li>
+			      		<Link to='/dishes/all'> Dishes
+			          </Link>
+							</li>
+			        <li>
+								<Link to='/'> Daily Menu
+			      		</Link>
+							</li>
+			      </ul>
+			    </nav>
+			  </div>
+			  <div className={`col-2 ${styles.user}`}>
+			    Karla Pandilla
+			    <small>
+			      <span className={ styles.signOut }>Sign out</span>
+			    </small>
+			  </div>
+			</header>
 		)
 	}
 }
