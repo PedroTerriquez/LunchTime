@@ -7,6 +7,10 @@ import Dish from './dish.js'
 import styles from '../../styles/site.sass'
 import DishApi from '../api/dish.js'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+library.add(faPlus)
 
 export default class DishesAll extends Component {
 	constructor() {
@@ -113,7 +117,14 @@ export default class DishesAll extends Component {
 					modal={ modal }
 					toggle={this.toggle.bind(this)}
 				/>
-        <Button color="secondary" onClick={this.toggle} >Add new</Button>
+        <a href="#" className={styles.float} onClick={this.toggle}>
+					<div className= {styles.myFloat}>
+						<FontAwesomeIcon
+							icon="plus"
+						/>
+					</div>
+				</a>
+
         <div className={ styles.gridContainer}>
         	{ this.dishesElements() }
         </div>

@@ -64,9 +64,6 @@ export default class Dashboard extends Component {
 function Calendar(props) {
 	return(
 		<div>
-			<Link to='/dishes/all'>
-  			<button className="btn btn-primary" style={{float: 'right'}}>Dishes</button>
-			</Link>
 			<h1>Calendar</h1>
 			<div>
 				<AddMenuModal />

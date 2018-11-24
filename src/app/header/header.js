@@ -18,13 +18,13 @@ export default class Header extends Component {
 			  <div className={`col-3 offset-5 ${styles.menu}`}>
 			    <nav>
 			      <ul>
-						  <li>
-			      		<Link to='/dishes/all'> Dishes
-			          </Link>
-							</li>
 			        <li>
 								<Link to='/'> Daily Menu
 			      		</Link>
+							</li>
+						  <li>
+			      		<Link to='/dishes/all'> Dishes
+			          </Link>
 							</li>
 			      </ul>
 			    </nav>
