@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from 'react-router-dom'
-import { Button } from 'reactstrap'
+import { Button, Nav, NavItem, NavLink } from 'reactstrap'
 import Loading from '../loading/loading.js'
 import AddDishModal from './dish_modal.js'
 import Dish from './dish.js'
@@ -17,8 +17,10 @@ export default class DishesAll extends Component {
 		super()
 		this.state = {
 			dishes: [],
+			results: [],
 			loading: true,
 			modal: false,
+			active: "All",
 			dish : {
 				id: "",
 				name: "",
@@ -38,6 +40,7 @@ export default class DishesAll extends Component {
 	componentWillUnmount() {
 		this.setState({
 			dishes: [],
+			results: [],
 			loading: true
 		})
 	}
@@ -46,11 +49,32 @@ export default class DishesAll extends Component {
     DishApi.all().then(dishes => {
     	this.setState({
     		dishes: dishes,
+    		results: dishes,
     		loading: false
     	})
     }).catch(err => {
       console.error(err)
     })
+	}
+
+	filterDishes(e, type){
+		if (type == "All") {
+			this.setState({
+				results: this.state.dishes,
+				active: "All"
+			})
+		}
+		else {
+		  let res = this.state.dishes.filter(dish => dish.type == type)
+			this.setState({
+				results: res,
+				active: type
+			})
+		}
+	}
+
+	setFilterActive(li) {
+		li.classList.toggle(styles.active)
 	}
 
 	toggle() {
@@ -89,9 +113,9 @@ export default class DishesAll extends Component {
 	}
 
 	dishesElements() {
-		const { dishes } = this.state
-		if(Object.keys(dishes).length > 1) {
-			return dishes.map(dish => (
+		const { results } = this.state
+		if(Object.keys(results).length >= 1) {
+			return results.map(dish => (
 				<Dish
 					key={ dish._id }
 					id={ dish._id }
@@ -106,7 +130,7 @@ export default class DishesAll extends Component {
 	}
 
 	dishesList() {
-		const { dish, modal } = this.state
+		const { dish, modal, active } = this.state
 		return (
 			<div>
 				<AddDishModal
@@ -124,6 +148,31 @@ export default class DishesAll extends Component {
 						/>
 					</div>
 				</a>
+				<div className={ styles.cdTabFilterWrapper }>
+					<div className={ styles.cdTabFilter }>
+					<ul className={ styles.cdFilters }>
+						<li
+							className={ active == "All" ? styles.active : "" }
+							onClick={(e)=> this.filterDishes(e, "All") }> All
+						</li>
+						<li
+							className={ active == "Drinks" ? styles.active : "" }
+							onClick={(e)=> this.filterDishes(e, "Drinks") }>Drinks</li>
+						<li
+							className={ active == "Starter" ? styles.active : "" }
+							onClick={(e)=> this.filterDishes(e, "Starter") }>Starter</li>
+						<li
+							className={ active == "Side" ? styles.active : "" }
+							onClick={(e)=> this.filterDishes(e, "Side") }>Side</li>
+						<li
+							className={ active == "Main Dish" ? styles.active : "" }
+							onClick={(e)=> this.filterDishes(e, "Main Dish") }>Main Dish</li>
+						<li
+							className={ active == "Desserts" ? styles.active : "" }
+							onClick={(e)=> this.filterDishes(e, "Desserts") }>Desserts</li>
+					</ul>
+					</div>
+				</div>
 
         <div className={ styles.gridContainer}>
         	{ this.dishesElements() }

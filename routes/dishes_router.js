@@ -5,7 +5,7 @@ const SlugGenerator = require('../lib/slug-generator.js');
 
 const slugGenerator = new SlugGenerator(Dish, 'slug');
 const dishesRouter = Express.Router();
-const permittedParams = ['_id', 'name', 'description', 'ingredients'];
+const permittedParams = ['_id', 'name', 'type', 'description', 'ingredients'];
 const reviewPermittedParams = ['user', 'rate', 'comment','_id'];
 
 dishesRouter.get('', (req, res) => {

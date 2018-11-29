@@ -12,6 +12,7 @@ const dishSchema = new db.Schema({
 	name: String,
 	description: String,
 	ingredients: Array,
+	type: String,
 	reviews: [reviewSchema],
 	user: { type: db.Schema.Types.ObjectId, ref: 'User' },
 	created_at:  { type: Date, default: Date.now },

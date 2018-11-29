@@ -58,7 +58,7 @@ export default class Review extends Component {
   			<h1> { dish.name }</h1>
   			<h3> Feel free to share with us your opinión about this food. </h3>
       	<FormGroup>
-        	<Label for="exampleText">Your comments here:</Label>
+        	<Label>Your comments here:</Label>
         	<StarsRange stars={ stars } handleClick={ this.handleRange.bind(this) }/>
           <Input type="textarea" name="text" id="comment" value={ comment } onChange={this.handleChange} />
         </FormGroup>
