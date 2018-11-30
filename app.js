@@ -9,6 +9,8 @@ const Logger = require('morgan')
 const Helmet = require('helmet')
 const cors = require('cors')
 
+const slackRouter = require('./routes/slack-router');
+
 app.use(cors())
 
 // Security
@@ -29,6 +31,8 @@ app.use(express.static('dist'))
 const apiRouter = require('./routes/index.js')
 
 app.use('/api', apiRouter)
+
+app.use('/slack', slackRouter)
 
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
