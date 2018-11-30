@@ -9,7 +9,10 @@ const permittedParams = ['_id', 'name', 'type', 'description', 'ingredients'];
 const reviewPermittedParams = ['user', 'rate', 'comment','_id'];
 
 dishesRouter.get('', (req, res) => {
-	Dish.find({}, (err, dishes) => {
+  const query = {
+    name: req.query.name ? new RegExp(req.query.name, 'i') : ''
+  }
+	Dish.find(query, (err, dishes) => {
 		res.send(dishes);
 	})
 });

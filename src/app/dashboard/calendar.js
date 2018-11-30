@@ -4,13 +4,19 @@ import Loading from '../loading/loading.js'
 import AddMenuModal from '../menu/add_menu.js'
 import styles from '../../styles/site.sass'
 import DayBox from '../dashboard/daybox.js'
-import Menu from '../api/menu.js'
+import MenuApi from '../api/menu.js'
+import Week from './week/index.js'
+import Month from '../lib/month.js'
+
+const currentDate = new Date()
+const month = new Month({ month: currentDate.getMonth(), year: currentDate.getFullYear() })
 
 export default class Dashboard extends Component {
 	constructor() {
 		super()
 		this.state = {
 			menus: [],
+      weeks: month.weeks(true),
 			loading: true
 		}
 	}
@@ -20,16 +26,26 @@ export default class Dashboard extends Component {
 	}
 
 	getMenus() {
-    Menu.monthMenus().then(menus => {
+    MenuApi.monthMenus().then(menus => {
+      const changedWeeks = this.state.weeks.map(week => {
+        return week.map(day => {
+          day.menu = menus.find(menu => {
+            const date = new Date(menu.date)
+            return date.getUTCDate() === day.day
+          })
+          return day
+        })
+      })
     	this.setState({
     		menus: menus,
-    		loading: false
+        loading: false,
+        weeks: changedWeeks
     	})
     }).catch(err => console.error(err))
 	}
 
 	swipeMenus(id,date){
-		Menu.switch(id, { date }).then(res => {
+		MenuApi.switch(id, { date }).then(res => {
     	this.getMenus()
     }).catch(err => console.error(err))
 	}
@@ -51,11 +67,23 @@ export default class Dashboard extends Component {
 		}
 	}
 
+  renderWeeks(weeks) {
+    const today = new Date().getDate()
+    return weeks.map((week, index) => {
+      const isActive = week.find(day => day.day == today)
+      if (week.length > 0) {
+        return (
+          <Week key={ index } days={ week } isHidden={ !isActive } />
+        )
+      }
+    })
+  }
+
 	render() {
 		const { loading } = this.state
 		return (
   		<div>
-				{ loading ? <Loading /> : <Calendar listMenus={ this.listMenus() } /> }
+				{ loading ? <Loading /> : <div>{ this.renderWeeks(this.state.weeks) }</div> }
   		</div>
 		)
 	}
@@ -74,4 +102,3 @@ function Calendar(props) {
 	</div>
 	)
 }
-
