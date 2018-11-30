@@ -6,6 +6,10 @@ const menuSchema = new db.Schema({
 	updated_at: { type: Date, default: Date.now }
 })
 
+menuSchema.virtual('human').get(function() {
+  return this.dishes.map(dish => dish.name).join(', ')
+})
+
 const Menu = db.model('Menu', menuSchema)
 
 module.exports = Menu;
