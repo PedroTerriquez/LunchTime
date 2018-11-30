@@ -13,13 +13,18 @@ function clicked(e) {
 	e.currentTarget.classList.toggle(styles.flipped) 
 }
 
-const Dish = ({ id, name, description, ingredients, handleDelete, handleEdit, handleReview }) => (
+const noImage = 'https://vignette.wikia.nocookie.net/citrus/images/6/60/No_Image_Available.png/revision/latest?cb=20170129011325'
+
+const Dish = ({ id, name, image, description, ingredients, handleDelete, handleEdit, handleReview }) => (
   <div className={styles.container} >
     <div className={styles.deck}>
       <div className={`${styles.card} ${styles.clickcard}`} onClick={(e) => clicked(e)}>
         <div className={`${styles.front} ${styles.face}`}>
-          <h2 className={styles.foodName}>{name}</h2>
-          <div className={styles.foodImage}></div>
+          <div className={styles.foodNameContainer}>
+            <h2 className={styles.foodName}>{name}</h2>
+          </div>
+          <div className={styles.foodImage} style={ { backgroundImage: `url("${ image || noImage }")` } }>
+          </div>
         </div>
         <div className={`${styles.back} ${styles.face}`}>
           <h5 className={styles.title }> Description </h5>
@@ -39,7 +44,7 @@ const Dish = ({ id, name, description, ingredients, handleDelete, handleEdit, ha
               />
             </Button>
             <Button color="warning" onClick={ handleReview}>
-              <Link to={`${id}/review`}>
+              <Link to={`dishes/${id}/review`}>
                 <FontAwesomeIcon
                   icon="clipboard-check"
                 />

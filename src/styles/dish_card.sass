@@ -5,8 +5,9 @@
   height: 180px
   border-radius: 50%
   border: 4px solid #c74028
-  background-image: url('http://www.madeleinecocina.com/wp-content/uploads/2014/04/DSC_3789.jpg')
   background-position: center
+  background-size: cover;
+  background-repeat: no-repeat;
 
 .back
   p, small
@@ -69,7 +70,7 @@ button:focus
     height: 100%
     z-index: -1
     background-size: 100% 100%
-    background-color: #FAE8CD
+    background-color: white
     -webkit-transform: rotateY(180deg)
     -moz-transform: rotateY(180deg)
     -ms-transform: rotateY(180deg)
@@ -80,13 +81,12 @@ button:focus
   transition: all 0.5s linear
 
 .front
-  border: 3px solid #C74029
   background-color: white
   z-index: 1
   box-shadow: 5px 5px 5px #aaa
 
 .back
-  background-color: #FAE8CD
+  background-color: white
   box-shadow: 0 0 0 #aaa
 
 .flipped, .hovercard:hover
@@ -112,10 +112,14 @@ button:focus
   color: #FAE8CD
 
 .food-name
+  font-size: 1.5rem;
+  padding-top: 10px
+
+.food-name-container
+  border-radius: 10px 10px 0px 0px;
   background-color: #c74028
   height: 70px
   max-height: 70px;
-  font-size: 1.5rem;
 
 .text
   background-color: #FF8874

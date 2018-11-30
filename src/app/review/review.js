@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Redirect } from 'react-router-dom'
 import { Form, FormGroup, Label, Input, FormFeedback, Col, Button } from 'reactstrap';
 import Textarea from '../input/textarea.js'
 import StarsRange from '../input/stars_range.js'
@@ -38,8 +39,8 @@ export default class Review extends Component {
 
 	handleSubmit(event){
 		event.preventDefault()
-		const { dish_id, rate, comment } = this.state
-    DishApi.addReview(dish_id, { rate, comment })
+		const { dish_id, stars, comment } = this.state
+    DishApi.addReview(dish_id, { stars, comment })
     	.then(res => {
     		console.log(res)
     		this.setState({redirect: true})

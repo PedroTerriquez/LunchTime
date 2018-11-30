@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Link } from 'react-router-dom'
-import { Button, Nav, NavItem, NavLink } from 'reactstrap'
+import { Button, Nav, NavItem, NavLink, FormGroup, Label, Input} from 'reactstrap'
 import Loading from '../loading/loading.js'
 import AddDishModal from './dish_modal.js'
 import Dish from './dish.js'
@@ -73,8 +73,13 @@ export default class DishesAll extends Component {
 		}
 	}
 
-	setFilterActive(li) {
-		li.classList.toggle(styles.active)
+	substringOf(str, substr) {
+		return (str.toUpperCase().indexOf(substr.toUpperCase()) > -1)
+	}
+
+	searchDish(event){
+		let res = this.state.results.filter(dish => this.substringOf(dish.name, event.target.value))
+		this.setState({results: res})
 	}
 
 	toggle() {
@@ -120,6 +125,7 @@ export default class DishesAll extends Component {
 					key={ dish._id }
 					id={ dish._id }
 					name={ dish.name }
+					image={ dish.image }
 					description={ dish.description }
 					ingredients={ dish.ingredients }
 					handleDelete={ this.deleteDish.bind(this) }
@@ -148,6 +154,9 @@ export default class DishesAll extends Component {
 						/>
 					</div>
 				</a>
+				<FormGroup>
+          <Input type="search" placeholder="search" onChange={(e)=>this.searchDish(e)} />
+        </FormGroup>
 				<div className={ styles.cdTabFilterWrapper }>
 					<div className={ styles.cdTabFilter }>
 					<ul className={ styles.cdFilters }>
