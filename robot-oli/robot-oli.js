@@ -1,5 +1,6 @@
 const { WebClient } = require('@slack/client');
 const Skill = require('./skill.js');
+const interactions = require('./interactions.js');
 const menuMemories = require('./menu-memories.js');
 const Menu = require('../db/model/menu.js');
 
@@ -14,21 +15,12 @@ RobotOli.prototype.listen = async function listen(message) {
   return this.reply(message);
 };
 
-RobotOli.prototype.decode = function decode(text) {
-  return new Promise((resolve, reject) => {
-    const interaction = this.skill.findInteraction(text);
-    if (interaction && interaction.model == 'menu') {
-      Menu.find(interaction.values).populate('dishes').exec((err, menu) => {
-        if (menu && menu[0]) {
-          resolve(menu[0].human);
-        } else {
-          resolve("Aún no lo sé :sadf:")
-        }
-      });
-    } else {
-      resolve('Ay, no entiendo');
-    }
-  });
+RobotOli.prototype.decode = async function decode(text) {
+  const interaction = this.skill.findInteraction(text);
+  if (interaction) {
+    return interactions.reply(interaction.name, interaction.values)
+  }
+  return 'Ay, no entiendo';
 }
 
 RobotOli.prototype.reply = async function reply(message) {
