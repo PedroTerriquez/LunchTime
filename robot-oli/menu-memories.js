@@ -25,9 +25,34 @@ module.exports = {
         'que comimos #{date}',
         'que comimos el #{date}',
         'que comimos el dia #{date}'
-      ],
-      action: '/menus/#{date}',
-      model: 'menu'
+      ]
+    },
+    {
+      name: 'theHorns',
+      libraries: [],
+      samples: [
+        'fuck yeah',
+        'gracias',
+        'muchas gracias'
+      ]
+    },
+    {
+      name: 'noYou',
+      libraries: [],
+      samples: [
+        'idiota',
+        'imbecil',
+        'estupido',
+        'estupida',
+        'pendejo',
+        'pendeja',
+        'chinga tu madre',
+        'perra',
+        'puto',
+        'puta',
+        'nango',
+        'nanga'
+      ]
     }
   ]
 };

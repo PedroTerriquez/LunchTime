@@ -22,7 +22,7 @@ Skill.prototype.matchInteraction = function matchInteraction(string, interaction
     interaction.samples.forEach(sample => {
       const matchingText = this.replaceLibraries(string, interaction.libraries);
       if (sample == matchingText) {
-        matchingInteraction = { name: interaction.name, libraries: interaction.libraries, sample, string, model: interaction.model };
+        matchingInteraction = { name: interaction.name, libraries: interaction.libraries, sample, string };
       }
     });
   });
