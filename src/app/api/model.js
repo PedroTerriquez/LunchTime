@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const Model = function Model(apiPath = '', apiFormat = '') {
-	this.apiUrl = '/api'
+  this.apiUrl = 'https://islunchtime.herokuapp.com/api'
   this.apiPath = apiPath
   this.apiFormat = apiFormat
 }

@@ -9,6 +9,7 @@ export default class AddDishModal extends Component {
 		super()
 		this.state = {
 			name: "",
+			image: "",
 			description: "",
 			type: "",
 			ingredients: [],
@@ -25,6 +26,8 @@ export default class AddDishModal extends Component {
 			return {
 				prevID: props._id,
         name: props.name,
+        image: props.image,
+        type: props.type,
         description: props.description,
         ingredients: props.ingredients
     	}
@@ -37,28 +40,27 @@ export default class AddDishModal extends Component {
 	}
 
 	handleSubmit(event){
-		debugger;
 		event.preventDefault()
-		const { name, description, ingredients, type } = this.state
+		const { name, description, ingredients, type, image } = this.state
 		const { _id } = this.props
 		if(_id){
-			this.updateDish(_id, name, type, description, ingredients)
+			this.updateDish(_id, name, type, image, description, ingredients)
     }
 		else {
-			this.saveDish(name, type, description, ingredients)
+			this.saveDish(name, type, image, description, ingredients)
     }
 	}
 
-	saveDish(name, type, description, ingredients) {
-    DishApi.add({ name, type, description, ingredients}).then(res => {
+	saveDish(name, type, image, description, ingredients) {
+    DishApi.add({ name, type, image, description, ingredients}).then(res => {
     		this.props.toggle()
     		console.log(res)
     	})
     	.catch(err => {	console.error(err) })
 	}
 
-	updateDish(id, name, type, description, ingredients) {
-    DishApi.update({ id, name, type, description, ingredients})
+	updateDish(id, name, type, image, description, ingredients) {
+    DishApi.update({ id, name, type, image, description, ingredients})
     	.then(res => {
     		this.props.toggle()
     		console.log(res)
@@ -67,7 +69,7 @@ export default class AddDishModal extends Component {
 	}
 
 	render(){
-		const { name, type, description, ingredients } = this.state
+		const { name, type, image, description, ingredients } = this.state
 		return(
 			<div>
         <Modal isOpen={this.props.modal} toggle={this.props.toggle} className="add-dish-modal">
@@ -77,6 +79,9 @@ export default class AddDishModal extends Component {
 							<Label for="name">Name: </Label>
 							<Input type='text' value={ name } id='name'
 								onChange={ this.handleChange }/>
+							<Label for="image">Image: </Label>
+							<Input type='text' value={ image } id='image'
+								onChange={ this.handleChange }/>
 							<Textarea rows='4' cols='20' labelFor='Description'
 								id='description' handleChange={ this.handleChange } value={ description }/>
 							<Label for="ingredients">Ingredients: </Label>
@@ -84,7 +89,6 @@ export default class AddDishModal extends Component {
 								id='ingredients' onChange={ this.handleChange }/>
 							<Label for="type">Type: </Label>
 							<Input type="select" id="type" onChange={ this.handleChange } multiple>
-            		<option>All</option>
             		<option>Drinks</option>
             		<option>Starter</option>
             		<option>Side</option>
