@@ -1,20 +1,33 @@
 import React from "react"
 import Style from "./style.sass"
+import Month from '../../lib/month.js'
 import DishApi from '../../api/dish.js'
+import MenuApi from '../../api/menu.js'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { Button } from 'reactstrap'
 
 class SearchDish extends React.Component {
   constructor(props) {
     super()
     this.state = { handleBlur: props.handleBlur, handleChange: props.handleChange, value: '', foundDishes: [] }
     this.onChange = this.onChange.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
   }
-  
+
   componentDidMount() {
     this.input.focus()
   }
 
   onChange() {
     this.setState({ value: event.target.value }, () => this.searchDish(this.state.value))
+  }
+
+  handleKeyPress() {
+    if (event.key !== 'Enter') { return }
+    let index = this.state.foundDishes.findIndex(obj => obj.name === event.target.value)
+    this.state.handleChange(this.state.foundDishes[index]._id)
   }
 
   searchDish(query) {
@@ -42,10 +55,10 @@ class SearchDish extends React.Component {
           ref={ input => this.input = input }
           type="text"
           list="suggestions"
-          onSelect={ console.log }
+          onKeyDown={ this.handleKeyPress }
           placeholder="Delicius food">
         </input>
-        <datalist id="suggestions" onSelect={ console.log }>
+        <datalist id="suggestions">
           { this.renderOptions() }
         </datalist>
     </div>
@@ -65,6 +78,7 @@ export default class DayCard extends React.Component {
       searchDishes: []
     }
     this.toggleSearchDish = this.toggleSearchDish.bind(this)
+    this.onChange = this.onChange.bind(this)
   }
 
   toggleSearchDish() {
@@ -73,13 +87,46 @@ export default class DayCard extends React.Component {
     })
   }
 
+  getDate() {
+    const current = new Date()
+    return new Date(current.getFullYear(), current.getMonth(), this.props.dayNumber).toISOString()
+  }
+
+  reload() {
+    //TODO Avoid reload, I really sorry for this
+    window.location.reload()
+  }
+
+  onChange(dish_id) {
+    if (this.props.id) {
+      MenuApi.pushDish(this.props.id, { dishes: dish_id })
+        .then(res => { this.reload() })
+        .catch(err => console.log(err))
+    } else {
+      MenuApi.add({ dishes: dish_id, date: this.getDate() })
+        .then(res => { this.reload() })
+        .catch(err => console.log(err))
+    }
+  }
+
+  handleDelete(dish_id) {
+    MenuApi.pullDish(this.props.id, { dishes: dish_id })
+      .then(res => { this.reload() })
+      .catch(err => console.log(err))
+  }
+
   renderDishes(dishes) {
-    return dishes.map(dish => (<li key={ dish._id }>{ dish.name }</li>))
+    return dishes.map(dish => (
+      <div>
+        <a onClick={ () => this.handleDelete(dish._id) } ><FontAwesomeIcon color='red' icon="trash"/></a>
+        {' '}{ dish.name }
+      </div>
+    ))
   }
 
   renderShowAddDish() {
     if (this.state.showAddDish) {
-      return (<SearchDish handleBlur={ this.toggleSearchDish } />)
+      return (<SearchDish handleBlur={ this.toggleSearchDish } handleChange={ this.onChange }  />)
     } else {
       return (<span onClick={ this.toggleSearchDish } className={ Style.addDishButton }>Add a dish</span>)
     }

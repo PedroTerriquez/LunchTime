@@ -22,7 +22,8 @@ export default class Week extends React.Component {
           key={ day.day }
           dayNumber={ date.getUTCDate() }
           dayName={ date.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' }) }
-          dishes={ dayMenu.dishes || [] } />
+          dishes={ dayMenu.dishes || [] }
+          id={ dayMenu._id } />
       )
     })
   }

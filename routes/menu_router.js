@@ -85,6 +85,19 @@ menuRouter.patch('/switch/:id', (req, res) => {
 	})
 })
 
+menuRouter.patch('/pushDish/:id', (req, res) => {
+  Menu.findOneAndUpdate({_id: req.params.id}, { $push: req.body }  ,(err, menu) => {
+    res.json(menu)
+  })
+})
+
+menuRouter.patch('/pullDish/:id', (req, res) => {
+  Menu.findOneAndUpdate({_id: req.params.id}, { $pull: req.body }  ,(err, menu) => {
+    res.json(menu)
+  })
+})
+
+
 menuRouter.patch('/:id', (req, res) => {
 	Menu.findOneAndUpdate({_id: req.params.id}, menu_params(req.body) ,(err, menu) => {
 		res.json(menu)
