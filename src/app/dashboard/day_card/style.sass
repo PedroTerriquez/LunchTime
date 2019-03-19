@@ -1,0 +1,53 @@
+.day-container
+  font-family: 'Muli'
+  width: 220px
+  height: 280px
+  background-color: white
+  border-radius: 8px
+  display: grid
+  grid-template-areas: 'day-title' 'day-dishes'
+  grid-template-rows: 50px auto
+  box-shadow: 5px 5px 5px #aaa
+
+.day-title
+  display: grid
+  background-color: #C74029
+  border-radius: 8px 8px 0px 0px
+  grid-template-areas: 'day-number day-name'
+  grid-template-columns: 60px auto
+
+.day-number
+  color: #FAE8CD
+  font-weight: bold
+  font-size: 36px
+  text-align: center
+
+.day-name
+  color: #F0AD44
+  padding-top: 8px
+  font-size: 24px
+
+.day-dishes
+  font-size: 14px
+  padding: 20px 10px
+  color: #385052
+
+.day-dishes-list
+  li
+    text-decoration: none
+  list-style-type: none
+  padding: 0
+  height: 160px
+  margin-bottom: 10px
+  overflow-y: auto
+  overflow-x: auto
+
+.add-dish-button
+  cursor: pointer
+  font-weight: bold
+  color: #128085
+  padding-left: 10px
+
+.add-dish-button:hover
+  text-decoration: underline
+  color: #385052

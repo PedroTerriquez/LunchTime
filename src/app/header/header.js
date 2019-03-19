@@ -30,7 +30,7 @@ export default class Header extends Component {
 			    </nav>
 			  </div>
 			  <div className={`col-2 ${styles.user}`}>
-			    Karla Pandilla
+			    Doña Oli
 			    <small>
 			      <span className={ styles.signOut }>Sign out</span>
 			    </small>

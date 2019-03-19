@@ -15,7 +15,7 @@ class Application extends Component {
     super();
 
     this.state = {
-      title: 'Prestamesta pls'
+      title: "It's lunch time"
     }
     document.title = this.state.title
   }
