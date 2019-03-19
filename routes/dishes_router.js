@@ -9,9 +9,11 @@ const permittedParams = ['_id', 'name', 'image', 'type', 'description', 'ingredi
 const reviewPermittedParams = ['user', 'stars', 'comment','_id'];
 
 dishesRouter.get('', (req, res) => {
-  const query = {
+  let query = {
     name: req.query.name ? new RegExp(req.query.name, 'i') : ''
   }
+  if (query.name === '') { query = {} }
+  console.log(query)
 	Dish.find(query, (err, dishes) => {
 		res.send(dishes);
 	})
