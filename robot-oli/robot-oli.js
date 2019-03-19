@@ -20,7 +20,7 @@ RobotOli.prototype.decode = async function decode(text) {
   if (interaction) {
     return interactions.reply(interaction.name, interaction.values)
   }
-  return 'Ay, no entiendo';
+  return 'Estoy reloca';
 }
 
 RobotOli.prototype.reply = async function reply(message) {

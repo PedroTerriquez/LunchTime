@@ -3,7 +3,7 @@ const Menu = require('../db/model/menu.js');
 const Interactions = function Interactions() {
   this.reply = async function reply(interactionName, props) {
     if (this[interactionName] === 'undefined') {
-      return 'Ay, no entiendo'
+      return //'Ay, no entiendo'
     }
     return this[interactionName](props);
   }

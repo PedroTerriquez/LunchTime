@@ -89,7 +89,7 @@ export default class DayCard extends React.Component {
 
   getDate() {
     const current = new Date()
-    return new Date(current.getFullYear(), current.getMonth(), this.props.dayNumber).toISOString()
+    return new Date(current.getFullYear(), current.getMonth(), this.props.dayNumber).setUTCHours(0,0,0,0)
   }
 
   reload() {
