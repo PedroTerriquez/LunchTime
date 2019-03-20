@@ -3,6 +3,7 @@ import Style from "./style.sass"
 import Month from '../../lib/month.js'
 import DishApi from '../../api/dish.js'
 import MenuApi from '../../api/menu.js'
+import AddDishModal from '../../dishes/dish_modal.js'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
@@ -27,6 +28,10 @@ class SearchDish extends React.Component {
   handleKeyPress() {
     if (event.key !== 'Enter') { return }
     let index = this.state.foundDishes.findIndex(obj => obj.name === event.target.value)
+    if (index === -1) {
+      this.props.toggleAddDish()
+      return
+    }
     this.state.handleChange(this.state.foundDishes[index]._id)
   }
 
@@ -75,16 +80,20 @@ export default class DayCard extends React.Component {
       dishes: props.dishes,
       handleAddDish: props.handleAddDish,
       showAddDish: false,
+      modal: false,
       searchDishes: []
     }
     this.toggleSearchDish = this.toggleSearchDish.bind(this)
+    this.toggleAddDish = this.toggleAddDish.bind(this)
     this.onChange = this.onChange.bind(this)
   }
 
   toggleSearchDish() {
-    this.setState({
-      showAddDish: !this.state.showAddDish
-    })
+    this.setState({ showAddDish: !this.state.showAddDish })
+  }
+
+  toggleAddDish() {
+    this.setState({modal: !this.state.modal})
   }
 
   getDate() {
@@ -126,14 +135,14 @@ export default class DayCard extends React.Component {
 
   renderShowAddDish() {
     if (this.state.showAddDish) {
-      return (<SearchDish handleBlur={ this.toggleSearchDish } handleChange={ this.onChange }  />)
+      return (<SearchDish handleBlur={ this.toggleSearchDish } handleChange={ this.onChange } toggleAddDish={ this.toggleAddDish } />)
     } else {
       return (<span onClick={ this.toggleSearchDish } className={ Style.addDishButton }>Add a dish</span>)
     }
   }
 
   render() {
-    const { dayNumber, dayName, dishes, handleAddDish } = this.state
+    const { modal, dayNumber, dayName, dishes, handleAddDish } = this.state
     return (
       <div className={ Style.dayContainer }>
         <div className={ Style.dayTitle }>
@@ -148,6 +157,10 @@ export default class DayCard extends React.Component {
             { this.renderShowAddDish() }
           </div>
         </div>
+				<AddDishModal
+					modal={ modal }
+					toggle={this.toggleAddDish.bind(this)}
+				/>
       </div>
     )
   }
