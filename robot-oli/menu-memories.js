@@ -53,6 +53,25 @@ module.exports = {
         'nango',
         'nanga'
       ]
+    },
+    {
+      name: 'menuSubscribe',
+      libraries: [],
+      samples: [
+        'suscribeme',
+        'subscribe me',
+        'subscribe'
+      ]
+    },
+    {
+      name: 'menuUnsubscribe',
+      libraries: [],
+      samples: [
+        'desuscribeme',
+        'dame de baja',
+        'unsubscribe me',
+        'unsubscribe'
+      ]
     }
   ]
 };

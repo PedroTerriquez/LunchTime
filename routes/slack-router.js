@@ -20,4 +20,6 @@ slackRouter.post('', (req, res) => {
     .finally(() => res.send(challenge));
 });
 
+robotOli.runCronJobs();
+
 module.exports = slackRouter;

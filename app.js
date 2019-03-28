@@ -10,7 +10,7 @@ const Logger = require('morgan')
 const Helmet = require('helmet')
 const cors = require('cors')
 
-const slackRouter = require('./routes/slack-router');
+const slackRouter = require('./routes/slack-router')
 
 app.use(cors())
 
