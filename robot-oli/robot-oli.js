@@ -50,6 +50,8 @@ RobotOli.prototype.runCronJobs = async function runCronJobs() {
     subscribers.forEach(async subscriber => {
       this.sendMessage(`El menú de hoy es: ${todayMenu}`, subscriber.slack_id);
     });
+  }, {
+    timezone: 'America/Mexico_City'
   });
 }
 
