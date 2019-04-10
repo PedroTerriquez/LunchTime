@@ -23,7 +23,7 @@ RobotOli.prototype.decode = async function decode(text, channel) {
   if (interaction) {
     return interactions.reply(interaction.name, interaction.values, channel)
   }
-  return 'Estoy reloca';
+  return dontKnowAnswers.sample();
 }
 
 RobotOli.prototype.reply = async function reply(message) {
@@ -51,6 +51,12 @@ RobotOli.prototype.runCronJobs = async function runCronJobs() {
       this.sendMessage(`El menú de hoy es: ${todayMenu}`, subscriber.slack_id);
     });
   });
+}
+
+const dontKnowAnswers = ['Tú no me mandas', 'Ay, no entiendo', 'Deja de hacerte el chistosito, escribe bien', ':thinking_face:'];
+
+Array.prototype.sample = function() {
+  return this[~~(Math.random() * this.length)];
 }
 
 module.exports = RobotOli;
