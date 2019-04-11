@@ -43,7 +43,7 @@ RobotOli.prototype.sendMessage = async function sendMessage(message, channel) {
 }
 
 RobotOli.prototype.runCronJobs = async function runCronJobs() {
-  cronJob.schedule('0 18 * * 1-5', async () => {
+  cronJob.schedule('0 12 * * 1-5', async () => {
     const subscribers = await Subscriber.find();
     const today = moment().toDate().toISOString().replace(/T.*/, 'T00:00:00.000Z');
     const todayMenu = await interactions.askMenu({ date: today });
