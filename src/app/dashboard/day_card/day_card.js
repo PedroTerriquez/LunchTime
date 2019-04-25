@@ -37,8 +37,7 @@ export default class DayCard extends React.Component {
   }
 
   reload() {
-    //TODO Avoid reload, I really sorry for this
-    window.location.reload()
+    this.props.updateMenus()
   }
 
   onChange(dish_id) {
@@ -76,15 +75,31 @@ export default class DayCard extends React.Component {
     }
   }
 
+	onDragStart(ev, id) {
+		ev.dataTransfer.setData('id_from',id)
+	}
+
+	onDrop(ev, date, id){
+		let idFrom = ev.dataTransfer.getData("id_from")
+		let idTo = id
+		if(idFrom != idTo){
+      MenuApi.switch(idFrom, { idTo, date }).then(res => {
+        this.reload()
+      }).catch(err => console.error(err))
+		}
+	}
+
   render() {
     const { modal, handleAddDish } = this.state
-    const { dayNumber, dayName, dishes } = this.props
+    const { date, dishes, id } = this.props
     return (
-      <div className={ Style.dayContainer }>
-        <div className={ Style.dayTitle }>
-          <div className={ Style.dayNumber }>{ dayNumber }</div>
-          <div className={ Style.dayName }>{ dayName }</div>
-        </div>
+      <div
+        className={ Style.dayContainer }
+        draggable
+        onDragStart={ (e) => this.onDragStart(e, id) }
+        onDragOver={ (e) => e.preventDefault() }
+        onDrop={ (e) => this.onDrop(e, date, id) }>
+        <DayCardHeader date={date}/>
         <div className={ Style.dayDishes }>
           <ul className={ Style.dayDishesList }>
             { this.renderDishes(dishes) }
@@ -100,4 +115,13 @@ export default class DayCard extends React.Component {
       </div>
     )
   }
+}
+
+const DayCardHeader = ({ date }) => {
+  return(
+  <div className={ Style.dayTitle }>
+    <div className={ Style.dayNumber }>{ date.getUTCDate() }</div>
+    <div className={ Style.dayName }>{ date.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' }) }</div>
+  </div>
+  )
 }

@@ -63,10 +63,10 @@ menuRouter.post('', (req, res) => {
 });
 
 menuRouter.patch('/switch/:id', (req, res) => {
-  const id = req.params.id
-  const params = req.body
-  Menu.findOne({ _id: id }).exec((err, menu) => {
-    if (menu) {
+	const id = req.params.id
+	const params = req.body
+	Menu.findOne({ _id: id }).exec((err, menu) => {
+		if (menu) {
       Menu.findOneAndUpdate({ _id: params.idTo }, { date: null }).exec((err, menuTarget) => {
         if(menuTarget){
           menuTarget.date = menu.date

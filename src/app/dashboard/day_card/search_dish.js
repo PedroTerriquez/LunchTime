@@ -24,7 +24,7 @@ export default class SearchDish extends React.Component {
       this.props.toggleAddDish()
       return
     }
-    this.props.handleChange(this.state.foundDishes[index]._id)
+    this.props.handleChange(this.state.foundDishes[index]._id, event.target.value)
   }
 
   searchDish(query) {

@@ -1,6 +1,6 @@
-import React from "react"
-import DayCard from "../day_card/day_card.js"
-import Style from "./week.sass"
+import React from 'react'
+import DayCard from '../day_card/day_card.js'
+import Style from './week.sass'
 
 export default class Week extends React.Component {
   constructor(props) {
@@ -17,12 +17,12 @@ export default class Week extends React.Component {
       const date = day.date
       return (
         <DayCard
-          className= { Style.week }
           key={ day.day }
-          dayNumber={ date.getUTCDate() }
-          dayName={ date.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' }) }
+          date = { date }
           dishes={ dayMenu.dishes || [] }
-          id={ dayMenu._id } />
+          id={ dayMenu._id }
+          updateMenus={this.props.updateMenus}
+        />
       )
     })
   }

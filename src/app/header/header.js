@@ -19,7 +19,7 @@ export default class Header extends Component {
 			    <nav>
 			      <ul>
 			        <li>
-								<Link to='/'> Daily Menu
+								<Link to='/'> Monthly Menu
 			      		</Link>
 							</li>
 						  <li>
@@ -30,7 +30,7 @@ export default class Header extends Component {
 			    </nav>
 			  </div>
 			  <div className={`col-2 ${styles.user}`}>
-			    Doña Oli
+			    User
 			    <small>
 			      <span className={ styles.signOut }>Sign out</span>
 			    </small>

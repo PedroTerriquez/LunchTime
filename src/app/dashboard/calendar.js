@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import { Link } from 'react-router-dom'
 import Loading from '../loading/loading.js'
 import styles from '../../styles/site.sass'
-import DayBox from '../dashboard/daybox.js'
 import MenuApi from '../api/menu.js'
 import Week from './week/week.js'
 import Month from '../lib/month.js'
@@ -52,10 +51,10 @@ export default class Calendar extends Component {
   renderWeeks(weeks) {
     const today = new Date().getDate()
     return weeks.map((days_week, index) => {
-      const isActive = days_week.find(day => day.day == today)
+      //const isActive = days_week.find(day => day.day == today)
       if (days_week.length > 0) {
         return (
-          <Week key={ index } days={ days_week } initialStatus={ !isActive } />
+          <Week key={ index } days={ days_week } updateMenus={this.getMenus.bind(this)} initialStatus={ false } />
         )
       }
     })
