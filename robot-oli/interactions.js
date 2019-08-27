@@ -1,33 +1,31 @@
-const Menu = require('../db/model/menu.js');
-const Subscriber = require('../db/model/subscriber.js');
+const Menu = require('../db/model/menu.js')
+const Subscriber = require('../db/model/subscriber.js')
 
 const Interactions = function Interactions() {
   this.reply = async function reply(interactionName, props, channel) {
-    if (this[interactionName] === 'undefined') {
-      return //'Ay, no entiendo'
+    if (this[interactionName] !== 'undefined') {
+      return this[interactionName](props, channel)
     }
-    return this[interactionName](props, channel);
   }
 
   this.askMenu = function askMenu(props) {
-    console.log(props);
     return new Promise((resolve, reject) => {
       Menu.find(props).populate('dishes').exec((err, menu) => {
         if (menu && menu[0]) {
-          resolve(menu[0].human);
+          resolve({ attachments: [{ title: menu[0].human, image_url: menu[0].image, color: 'good' }] });
         } else {
-          resolve("Aún no lo sé :sadf:")
+          resolve({ attachments: [{ title: 'Aún no lo sé :sadf:', color: 'warning' }] })
         }
       });
     });
   }
 
   this.theHorns = function theHorns() {
-    return ':sign_of_the_horns:';
+    return { attachments: [{ title: ':sign_of_the_horns:', color: 'good' }] }
   }
 
   this.noYou = function noYou() {
-    return 'La tuya perro :madf:';
+    return { attachments: [{ title: ':madf: La tuya perro', color: 'danger' }] }
   }
 
   this.menuSubscribe = function menuSubscribe(props, channel) {
@@ -39,7 +37,7 @@ const Interactions = function Interactions() {
       Subscriber.findOneAndUpdate(params, params, { upsert: true, new: true, setDefaultsOnInsert: true }).exec((err, subscriber) => {
         if (err) return reject(err);
 
-        resolve('Listo :drogof:');
+        resolve({ attachments: [{ title: ':drogof: Listo', color: 'good' }] });
       });
     })
   }
@@ -53,7 +51,7 @@ const Interactions = function Interactions() {
       Subscriber.findOneAndRemove(params).exec((err, subscriber) => {
         if (err) return reject(err);
 
-        resolve('Okay :sadf:');
+        resolve({ attachments: [{ title: ':sadf: Okay', color: 'warning' }] });
       })
     });
   }
