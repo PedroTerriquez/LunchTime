@@ -10,6 +10,11 @@ menuSchema.virtual('human').get(function() {
   return this.dishes.map(dish => dish.name).join(', ')
 })
 
+menuSchema.virtual('image').get(function() {
+  const mainDish = this.dishes.find(dish => dish.type == 'Main Dish')
+  if (mainDish) return mainDish.image
+})
+
 const Menu = db.model('Menu', menuSchema)
 
 module.exports = Menu;

@@ -1,4 +1,5 @@
-//require('newrelic')
+require('dotenv').config()
+
 const express = require('express')
 const path = require('path')
 const app = express()
@@ -10,6 +11,7 @@ const Logger = require('morgan')
 const Helmet = require('helmet')
 const cors = require('cors')
 
+const apiRouter = require('./routes/index.js')
 const slackRouter = require('./routes/slack-router')
 
 app.use(cors())
@@ -29,8 +31,6 @@ app.use(BodyParser.urlencoded({ extended: true }))
 
 app.use(express.static('dist'))
 
-const apiRouter = require('./routes/index.js')
-
 app.use('/api', apiRouter)
 
 app.use('/slack', slackRouter)
@@ -39,4 +39,4 @@ app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}`))
+app.listen(PORT, () => console.log(`Application running on port ${PORT}`))
