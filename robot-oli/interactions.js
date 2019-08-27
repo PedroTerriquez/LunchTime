@@ -12,9 +12,17 @@ const Interactions = function Interactions() {
     return new Promise((resolve, reject) => {
       Menu.find(props).populate('dishes').exec((err, menu) => {
         if (menu && menu[0]) {
-          resolve({ attachments: [{ title: menu[0].human, image_url: menu[0].image, color: 'good' }] });
+          resolve({
+            attachments: [
+              {
+                title: menu[0].human,
+                image_url: menu[0].image,
+                color: 'good'
+              }
+            ]
+          });
         } else {
-          resolve({ attachments: [{ title: 'Aún no lo sé :sadf:', color: 'warning' }] })
+          resolve({ attachments: [{ title: ':sadf: Aún no lo sé', color: 'warning' }] })
         }
       });
     });

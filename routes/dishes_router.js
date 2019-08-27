@@ -13,7 +13,6 @@ dishesRouter.get('', (req, res) => {
     name: req.query.name ? new RegExp(req.query.name, 'i') : ''
   }
   if (query.name === '') { query = {} }
-  console.log(query)
 	Dish.find(query, (err, dishes) => {
 		res.send(dishes);
 	})

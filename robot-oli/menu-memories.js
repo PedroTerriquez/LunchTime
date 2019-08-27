@@ -24,7 +24,9 @@ module.exports = {
         'que comimos',
         'que comimos #{date}',
         'que comimos el #{date}',
-        'que comimos el dia #{date}'
+        'que comimos el dia #{date}',
+        'what\'s for lunch',
+        'what\'s for lunch #{date}',
       ]
     },
     {
@@ -33,7 +35,9 @@ module.exports = {
       samples: [
         'fuck yeah',
         'gracias',
-        'muchas gracias'
+        'muchas gracias',
+        'thanks',
+        'thank you'
       ]
     },
     {
@@ -51,7 +55,8 @@ module.exports = {
         'puto',
         'puta',
         'nango',
-        'nanga'
+        'nanga',
+        'que asco'
       ]
     },
     {
@@ -60,7 +65,9 @@ module.exports = {
       samples: [
         'suscribeme',
         'subscribe me',
-        'subscribe'
+        'subscribe',
+        'dame de alta',
+        'enviame recordatorios'
       ]
     },
     {
@@ -70,8 +77,9 @@ module.exports = {
         'desuscribeme',
         'dame de baja',
         'unsubscribe me',
-        'unsubscribe'
+        'unsubscribe',
+        'deja de enviarme recordatorios'
       ]
     }
   ]
-};
+}

@@ -1,5 +1,3 @@
-require('dotenv').config()
-
 const cronJob = require('node-cron')
 const moment = require('moment')
 const { WebClient } = require('@slack/client')
@@ -44,7 +42,32 @@ RobotOli.prototype.sendMessage = async function sendMessage(message, channel) {
 }
 
 RobotOli.prototype.runCronJobs = async function runCronJobs() {
-  cronJob.schedule(process.env.SLACK_REMINDER_TIME, async () => {
+  cronJob.schedule(process.env.SLACK_FIRST_REMINDER_TIME, async () => {
+    const subscribers = await Subscriber.find()
+    const today = moment().toDate().toISOString().replace(/T.*/, 'T00:00:00.000Z')
+    const todayMenu = await interactions.askMenu({ date: today })
+    todayMenu.attachments.push({
+      title: 'Orden',
+      callback_id: 'decline_lunch',
+      color: 'good',
+      actions: [
+        {
+          name: 'decline_lunch',
+          text: 'No voy a comer aquí',
+          style: 'danger',
+          type: 'button',
+          value: 'eating'
+        }
+      ]
+    })
+    subscribers.forEach(async subscriber => {
+      this.sendMessage(todayMenu, subscriber.slack_id)
+    })
+  }, {
+    timezone: 'America/Mexico_City'
+  })
+
+  cronJob.schedule(process.env.SLACK_LAST_REMINDER_TIME, async () => {
     const subscribers = await Subscriber.find()
     const today = moment().toDate().toISOString().replace(/T.*/, 'T00:00:00.000Z')
     const todayMenu = await interactions.askMenu({ date: today })
