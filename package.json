@@ -2,7 +2,7 @@
   "name": "lunchtime",
   "version": "1.0.0",
   "engines": {
-    "node": "10.11.0"
+    "node": "12.8.1"
   },
   "description": "An app so you always know what you will eat any day! ",
   "main": "app.js",
