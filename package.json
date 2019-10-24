@@ -9,8 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon app",
-    "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production"
+    "start": "npx webpack-dev-server --mode development --open",
+    "build": "npx webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -70,6 +70,8 @@
     "react-router-dom": "^4.3.1",
     "reactstrap": "^6.4.0",
     "sass-loader": "^7.1.0",
+    "shipit-cli": "^5.1.0",
+    "shipit-deploy": "^5.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^4.19.0",
     "webpack-cli": "^3.1.0",
