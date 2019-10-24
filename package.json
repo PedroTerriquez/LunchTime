@@ -8,7 +8,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon app",
+    "server": "npx nodemon app",
     "start": "npx webpack-dev-server --mode development --open",
     "build": "npx webpack --mode production"
   },
