@@ -18,7 +18,7 @@ module.exports = shipit => {
   })
 
   shipit.blTask('npm:setup', async () => {
-    await shipit.remote(`cd ${shipit.releasePath} && npm install --production 2> /dev/null`);
+    await shipit.remote(`cd ${shipit.releasePath} && npm install`);
     await shipit.remote(`cd ${shipit.releasePath} && npm run build`);
     await shipit.remote(`cd ${shipit.releasePath} && npm run server`);
   });
