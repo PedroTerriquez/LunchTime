@@ -20,6 +20,7 @@ module.exports = shipit => {
   shipit.blTask('npm:setup', async () => {
     await shipit.remote(`cd ${shipit.releasePath} && npm install`);
     await shipit.remote(`cd ${shipit.releasePath} && npm run build`);
-    await shipit.remote(`cd ${shipit.releasePath} && npm run server`);
+    //USING SUDO BECAUSE WE ARE USING PORT 80
+    await shipit.remote(`cd ${shipit.releasePath} && sudo su && source /var/apps/lunchtime/.env && npm run server`);
   });
 }
