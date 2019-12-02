@@ -22,6 +22,6 @@ module.exports = shipit => {
     await shipit.remote(`cd ${shipit.releasePath} && npm install`);
     await shipit.remote(`cd ${shipit.releasePath} && npm run build`);
     //USING SUDO BECAUSE WE ARE USING PORT 80
-    await shipit.remote(`cd ${shipit.releasePath} && sudo npm run server`);
+    await shipit.remote(`cd ${shipit.releasePath} && sudo npm run server &`);
   });
 }
