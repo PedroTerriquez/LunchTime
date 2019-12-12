@@ -1,8 +1,8 @@
-#!/usr/lib/env bash
+#!/usr/bin/env bash
 
 set -e
 
-RELEASE_PATH=$1
+RELEASE_PATH=$(pwd)
 APP_PATH=/var/apps/lunchtime/
 CURRENT_PATH=${APP_PATH}current
 
