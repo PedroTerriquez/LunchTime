@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const Model = function Model(apiPath = '', apiFormat = '') {
-  this.apiUrl = 'http://3.92.53.75/api'
+  this.apiUrl = 'http://3.92.53.75:3000/api'
   this.apiPath = apiPath
   this.apiFormat = apiFormat
 }
