@@ -13,7 +13,7 @@ echo 'Link current release path'
 ln -nfs $RELEASE_PATH $CURRENT_PATH
 
 echo $(pwd)
-echo 'CD to release directory ${CURRENT_PATH}'
+echo 'CD to release directory'
 cd $CURRENT_PATH
 echo $(pwd)
 
