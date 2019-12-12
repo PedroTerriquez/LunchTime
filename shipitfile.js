@@ -18,8 +18,7 @@ module.exports = shipit => {
   })
 
   shipit.blTask('npm:setup', async () => {
-    await shipit.remote('sudo su ubuntu');
     await shipit.remote(`chmod +x ${shipit.releasePath}/deployment.sh`);
-    await shipit.remote(`${shipit.releasePath}/deployment.sh`);
+    await shipit.remote(`sudo ${shipit.releasePath}/deployment.sh -u ubuntu`);
   });
 }
