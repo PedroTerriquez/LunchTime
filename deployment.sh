@@ -7,7 +7,7 @@ APP_PATH=/var/apps/lunchtime/
 CURRENT_PATH=${APP_PATH}current
 
 echo 'Add env variables'
-cp ${APP_PATH}/.env ${RELEASE_PATH}.
+cp ${APP_PATH}/.env ${RELEASE_PATH}
 
 echo 'Link current release path'
 ln -nfs $RELEASE_PATH $CURRENT_PATH
