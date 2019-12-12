@@ -6,9 +6,6 @@ RELEASE_PATH=$(pwd)
 APP_PATH=/var/apps/lunchtime/
 CURRENT_PATH=${APP_PATH}current
 
-echo 'Change to Ubuntu user'
-sudo su ubuntu
-
 echo 'Add env variables'
 cp ${APP_PATH}/.env ${RELEASE_PATH}.
 
