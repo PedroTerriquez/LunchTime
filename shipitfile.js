@@ -19,6 +19,6 @@ module.exports = shipit => {
 
   shipit.blTask('npm:setup', async () => {
     await shipit.remote(`chmod +x ${shipit.releasePath}/deployment.sh`);
-    await shipit.remote(`./deployment.sh ${shipit.releasePath}`);
+    await shipit.remote(`${shipit.releasePath}/deployment.sh ${shipit.releasePath}`);
   });
 }
