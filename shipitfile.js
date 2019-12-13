@@ -8,7 +8,7 @@ module.exports = shipit => {
       ignores: ['.git', 'node_modules'],
     },
     production: {
-      key: '~pedroterriquez/Documents/key_pem.txt',
+      key: './key.pem',
       servers: 'ubuntu@3.92.53.75',
     },
   })
@@ -19,6 +19,6 @@ module.exports = shipit => {
 
   shipit.blTask('npm:setup', async () => {
     await shipit.remote(`chmod +x ${shipit.releasePath}/deployment.sh`);
-    await shipit.remote(`${shipit.releasePath}/deployment.sh`);
+    await shipit.remote(`${shipit.releasePath}/deployment.sh ${shipit.releasePath}`);
   });
 }

@@ -2,7 +2,7 @@
 
 set -e
 
-RELEASE_PATH=$(pwd)
+RELEASE_PATH=$1
 APP_PATH=/var/apps/lunchtime/
 CURRENT_PATH=${APP_PATH}current
 
