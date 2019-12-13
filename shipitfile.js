@@ -4,7 +4,7 @@ module.exports = shipit => {
   shipit.initConfig({
     default: {
       deployTo: '/var/apps/lunchtime',
-      repositoryUrl: 'https://github.com/pedroterriquez/LunchTime.git',
+      repositoryUrl: 'git@github.com:PedroTerriquez/LunchTime.git',
       ignores: ['.git', 'node_modules'],
     },
     production: {
