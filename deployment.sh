@@ -4,7 +4,7 @@ set -e
 
 RELEASE_PATH=$1
 APP_PATH=/var/apps/lunchtime/
-CURRENT_PATH=${APP_PATH}current
+CURRENT_PATH=${APP_PATH}releases/current
 
 echo 'Add env variables'
 cp ${APP_PATH}/.env ${RELEASE_PATH}
@@ -12,10 +12,8 @@ cp ${APP_PATH}/.env ${RELEASE_PATH}
 echo 'Link current release path'
 ln -nfs $RELEASE_PATH $CURRENT_PATH
 
-echo $(pwd)
 echo 'CD to release directory'
 cd $CURRENT_PATH
-echo $(pwd)
 
 echo 'Install npm dependencies'
 npm install

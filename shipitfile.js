@@ -6,10 +6,12 @@ module.exports = shipit => {
       deployTo: '/var/apps/lunchtime',
       repositoryUrl: 'git@github.com:PedroTerriquez/LunchTime.git',
       ignores: ['.git', 'node_modules'],
+      keepReleases: 3,
     },
     production: {
       key: './key.pem',
       servers: 'ubuntu@3.92.53.75',
+      branch: 'master'
     },
   })
 
