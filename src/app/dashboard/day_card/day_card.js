@@ -31,11 +31,6 @@ export default class DayCard extends React.Component {
     this.setState({modal: !this.state.modal})
   }
 
-  getDate() {
-    const current = new Date()
-    return new Date(current.getFullYear(), current.getMonth(), this.props.dayNumber).setUTCHours(0,0,0,0)
-  }
-
   reload() {
     this.props.updateMenus()
   }
@@ -46,7 +41,7 @@ export default class DayCard extends React.Component {
         .then(res => { this.reload() })
         .catch(err => console.log(err))
     } else {
-      MenuApi.add({ dishes: dish_id, date: this.getDate() })
+      MenuApi.add({ dishes: dish_id, date: this.props.date })
         .then(res => { this.reload() })
         .catch(err => console.log(err))
     }
@@ -82,11 +77,11 @@ export default class DayCard extends React.Component {
 	onDrop(ev, date, id){
 		let idFrom = ev.dataTransfer.getData("id_from")
 		let idTo = id
-		if(idFrom != idTo){
+    if(idFrom != idTo){
       MenuApi.switch(idFrom, { idTo, date }).then(res => {
         this.reload()
       }).catch(err => console.error(err))
-		}
+    }
 	}
 
   render() {
