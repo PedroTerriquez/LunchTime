@@ -47,7 +47,7 @@
     "morgan": "^1.9.0",
     "newrelic": "^5.6.1",
     "node-cron": "^2.0.3",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "normalize-space": "^1.0.2",
     "normalize-strings": "^1.1.0",
     "params": "^0.1.1",
