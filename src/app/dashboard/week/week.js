@@ -1,13 +1,12 @@
-import React from "react"
-import DayCard from "../day_card/index.js"
-import Style from "./style.sass"
+import React from 'react'
+import DayCard from '../day_card/day_card.js'
+import Style from './week.sass'
 
 export default class Week extends React.Component {
   constructor(props) {
     super()
     this.state = {
-      days: props.days,
-      isHidden: props.isHidden,
+      isHidden: props.initialStatus,
     }
     this.handleToggle = this.handleToggle.bind(this)
   }
@@ -18,12 +17,12 @@ export default class Week extends React.Component {
       const date = day.date
       return (
         <DayCard
-          className= { Style.week }
           key={ day.day }
-          dayNumber={ date.getUTCDate() }
-          dayName={ date.toLocaleDateString('en-US', { weekday: 'long', timeZone: 'UTC' }) }
+          date = { date }
           dishes={ dayMenu.dishes || [] }
-          id={ dayMenu._id } />
+          id={ dayMenu._id }
+          updateMenus={this.props.updateMenus}
+        />
       )
     })
   }
@@ -37,9 +36,13 @@ export default class Week extends React.Component {
   render() {
     return (
       <div className={ Style.weekContainer }>
-        <h3 className={ Style.weekName }>Week { this.state.days[0].week + 1 }<small className={ Style.toggleView } onClick={ this.handleToggle }>{ this.state.isHidden ? '[ show ]' : '[ hide ]' }</small></h3>
+        <h3 className={ Style.weekName }>Week { this.props.days[0].week + 1 }
+          <small className={ Style.toggleView } onClick={ this.handleToggle }>
+            { this.state.isHidden ? '[ show ]' : '[ hide ]' }
+          </small>
+        </h3>
         <div className={ Style.weekDays }>
-          { !this.state.isHidden && this.renderDayCards(this.state.days) }
+          { !this.state.isHidden && this.renderDayCards(this.props.days) }
       </div>
     </div>
     )

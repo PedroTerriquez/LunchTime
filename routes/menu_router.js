@@ -63,17 +63,20 @@ menuRouter.post('', (req, res) => {
 });
 
 menuRouter.patch('/switch/:id', (req, res) => {
-  const id = req.params.id
-  const params = req.body
-  Menu.findOne({ _id: id }).exec((err, menu) => {
-    if (menu) {
+  const idOrigin = req.params.id
+	const params = req.body
+	Menu.findOne({ _id: idOrigin }).exec((err, menuOrigin) => {
+		if (menuOrigin) {
       Menu.findOneAndUpdate({ _id: params.idTo }, { date: null }).exec((err, menuTarget) => {
+        if (err) {
+          Menu.findOneAndDelete({date: null}).exec((err, deleted) => { return res.status(201).json(deleted) })
+        }
         if(menuTarget){
-          menuTarget.date = menu.date
-          menu.date = params.date
-          menu.save((err1, updatedMenu) => {
+          menuTarget.date = menuOrigin.date
+          menuOrigin.date = params.date
+          menuOrigin.save((err1, updatedOriginMenu) => {
             menuTarget.save((err2, updatedTargetMenu) => {
-              return res.status(201).json(menu);
+              return res.status(201).json(menuOrigin);
             })
           })
         }

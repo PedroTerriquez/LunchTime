@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import ReactDOM from "react-dom"
 import Header from "./app/header/header.js"
 import Login from "./app/login/login.js"
-import Dashboard from './app/dashboard/calendar.js'
+import Calendar from './app/dashboard/calendar.js'
 import Error from './app/error/error.js'
 import DishesAll from './app/dishes/dishes_all.js'
 import Review from './app/review/review.js'
@@ -26,8 +26,8 @@ class Application extends Component {
     		<div>
       		<Header />
       		<Switch>
-        		<Route exact path="/login" component={ Login }/>
-        		<Route exact path="/" component={ Dashboard }/>
+        		<Route exact path='/login' component={ Login }/>
+        		<Route exact path='/' component={ Calendar }/>
         		<Route exact path='/dishes/all' component={ DishesAll }/>
         		<Route exact path='/dishes/:id/review' component={ Review }/>
         		<Route component={ Error } />
